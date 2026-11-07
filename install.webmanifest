@@ -1,0 +1,17 @@
+{
+  "id": "app/",
+  "name": "ProjectYearEnd",
+  "short_name": "ProjectYearEnd",
+  "description": "Invoice, surat jalan, dan piutang untuk pemasok hotel. Berjalan tanpa internet.",
+  "lang": "id",
+  "start_url": "app/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f8478",
+  "icons": [
+    { "src": "app/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "app/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "app/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
