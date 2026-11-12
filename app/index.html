@@ -738,6 +738,102 @@ input.is-locked { background: transparent; border-color: var(--color-line); curs
 .dialog-body { display: flex; flex-direction: column; gap: var(--space-3); }
 .dialog-body ol { margin: 0; padding-left: var(--space-5); }
 .dialog-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; margin-top: var(--space-5); }
+
+/* Sync: a tab on the right edge of the screen, and its panel. */
+.sync-tab {
+  align-items: center;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+  box-shadow: var(--shadow-raised);
+  color: var(--color-on-primary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  justify-content: center;
+  min-height: 72px;
+  padding: var(--space-2) 0;
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translate(6px, -50%);
+  transition: transform .2s var(--ease), background-color .15s;
+  width: 46px;
+  z-index: 30;
+}
+.sync-tab:hover, .sync-tab:focus-visible { background: var(--color-primary-hover); transform: translate(0, -50%); }
+.sync-tab:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.sync-panel { display: flex; flex-direction: column; gap: var(--space-3); }
+.sync-panel p { margin: 0; }
+.sync-section { display: flex; flex-direction: column; gap: var(--space-3); }
+.sync-section + .sync-section { border-top: 1px solid var(--color-line); padding-top: var(--space-4); }
+.sync-section h3 { color: var(--color-heading); font-size: var(--text-body); margin: 0; }
+.sync-choices { display: grid; gap: var(--space-3); grid-template-columns: 1fr 1fr; }
+.sync-choice {
+  align-items: flex-start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  gap: var(--space-2);
+  min-height: 132px;
+  padding: var(--space-4);
+  text-align: left;
+  transition: background-color .15s, border-color .15s;
+}
+.sync-choice:hover { background: var(--color-primary-soft); border-color: var(--color-primary); }
+.sync-choice:active { transform: translateY(1px); }
+.sync-choice:disabled { cursor: not-allowed; opacity: .55; }
+.sync-choice svg { color: var(--color-primary-strong); }
+.sync-choice strong { color: var(--color-heading); font-size: var(--text-body); }
+.sync-choice span { color: var(--color-muted); font-size: var(--text-small); line-height: 1.45; }
+.sync-qr { align-self: center; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden; transition: opacity .2s; width: min(248px, 100%); }
+.sync-qr svg { display: block; height: auto; width: 100%; }
+.sync-qr.is-used { opacity: .2; }
+.sync-lead { text-align: center; }
+.sync-meter { align-self: center; background: var(--color-line); border-radius: var(--radius-pill); height: 6px; overflow: hidden; width: min(248px, 100%); }
+.sync-meter span { background: var(--color-primary); display: block; height: 100%; transition: width 1s linear; width: 100%; }
+.sync-meter[hidden] { display: none; }
+.sync-status { color: var(--color-heading); font-weight: 600; text-align: center; }
+.sync-url { color: var(--color-muted); font-size: var(--text-caption); overflow-wrap: anywhere; text-align: center; }
+.sync-summary { margin: 0; padding-left: var(--space-5); }
+.sync-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; }
+.sync-main { font-size: var(--text-heading); min-height: 56px; width: 100%; }
+.sync-panel ol { margin: 0; padding-left: var(--space-5); }
+.sync-more { border-top: 1px solid var(--color-line); padding-top: var(--space-1); }
+.sync-more summary { color: var(--color-muted); cursor: pointer; font-weight: 600; line-height: var(--control-height); }
+.sync-more .sync-choices { margin-top: var(--space-2); }
+
+/* The audit of one invoice: a verdict line, and every check behind it. */
+.checks { color: var(--color-muted); font-size: var(--text-small); margin-bottom: var(--space-2); }
+.checks summary { color: var(--color-primary-strong); cursor: pointer; font-weight: 600; line-height: var(--control-height); }
+.checks summary.is-flagged { color: var(--color-warning); }
+.checks ul { display: flex; flex-direction: column; gap: var(--space-1); list-style: none; margin: 0 0 var(--space-2); padding: 0; }
+.checks li { display: flex; gap: var(--space-2); }
+.checks li.is-flagged { color: var(--color-text); }
+.check-mark { color: var(--color-primary-strong); flex: none; font-weight: 700; text-align: center; width: 1.2em; }
+.is-flagged > .check-mark { color: var(--color-warning); }
+.check-problem { color: var(--color-warning); display: block; font-weight: 600; }
+.dialog .checks { font-size: var(--text-body); margin: 0; }
+
+/* Drafts from a phone, and the short facts on the home page. */
+.draft-box { margin-bottom: var(--space-4); }
+.draft-main { flex: 1 1 320px; }
+.home-pulse .notice { margin: var(--space-3) 0 0; }
+
+/* Scrollbars are thin and take the theme's colours. The phone menu scrolls by swipe and shows none. */
+* { scrollbar-color: var(--color-control-border) transparent; scrollbar-width: thin; }
+.app-nav { scrollbar-width: none; }
+.app-nav::-webkit-scrollbar { display: none; }
+@media (max-width: 420px) {
+  .sync-choices { grid-template-columns: 1fr; }
+  .sync-choice { min-height: 0; }
+}
 @keyframes dialog-in {
   from { opacity: 0; transform: translateY(8px) scale(.98); }
   to { opacity: 1; transform: none; }
@@ -1103,6 +1199,10 @@ class Icon {
     close: ['M6 6l12 12', 'M18 6L6 18'],
     calendar: ['M4 6h16v14H4z', 'M4 10h16', 'M8 3v4', 'M16 3v4'],
     moon: ['M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z'],
+    sync: ['M21 12a9 9 0 0 1-15.4 6.4L3 16', 'M3 21v-5h5', 'M3 12a9 9 0 0 1 15.4-6.4L21 8', 'M21 3v5h-5'],
+    chevronLeft: ['M15 6l-6 6 6 6'],
+    upload: ['M12 15V4', 'M7 9l5-5 5 5', 'M4 15v5h16v-5'],
+    download: ['M12 4v11', 'M7 10l5 5 5-5', 'M4 15v5h16v-5'],
     sun: ['M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z', 'M12 2v2', 'M12 20v2', 'M4.9 4.9l1.4 1.4', 'M17.7 17.7l1.4 1.4', 'M2 12h2', 'M20 12h2', 'M4.9 19.1l1.4-1.4', 'M17.7 6.3l1.4-1.4'],
   };
 
@@ -1445,29 +1545,53 @@ class InvoiceAudit {
     });
   }
 
-  static review(draft, { items, invoices, today, id }) {
-    const warnings = [];
+  // Every check as one readable line: what was looked at and what, if anything, needs a second look.
+  // It answers "is this invoice right?" with what was actually verified, not with a promise.
+  // draft carries its totals. bank is the account the invoice prints. id is set for a saved invoice.
+  static checks(draft, { items, invoices, today, id, bank }) {
+    const check = (label, problems, warns) => ({ label, ok: problems.length === 0, problems, warns: Boolean(warns) });
     const duplicate = InvoiceAudit.duplicateOf(draft, invoices, id);
-    if (duplicate) {
-      warnings.push(`Kemungkinan tagihan ganda: ${duplicate.number} bertanggal ${Format.date(duplicate.date)} punya total sama, ${Format.rupiah(duplicate.totals.total)}.`);
-    }
-    if (draft.date > today) warnings.push(`Tanggal invoice ${Format.date(draft.date)} ada di masa depan.`);
+    const dates = [];
+    if (draft.date > today) dates.push(`Tanggal invoice ${Format.date(draft.date)} ada di masa depan.`);
     if (draft.date < DateUtil.addDays(today, -InvoiceAudit.BACKDATE_DAYS)) {
-      warnings.push(`Tanggal invoice ${Format.date(draft.date)} lebih dari ${InvoiceAudit.BACKDATE_DAYS} hari yang lalu.`);
+      dates.push(`Tanggal invoice ${Format.date(draft.date)} lebih dari ${InvoiceAudit.BACKDATE_DAYS} hari yang lalu.`);
     }
-    for (const line of InvoiceAudit.repeatedLines(draft.lines.filter((line) => !PoLine.isPo(line)))) {
-      warnings.push(`${line.description} tercatat lebih dari satu baris.`);
-    }
-    // When editing an old invoice, a DB price that has since risen is not an error.
-    if (!id) {
-      for (const line of draft.lines.filter((candidate) => !PoLine.isPo(candidate))) {
-        const variance = InvoiceAudit.priceVariance(line, items);
-        if (variance && Math.abs(variance.percent) >= InvoiceAudit.PRICE_TOLERANCE_PERCENT) {
-          warnings.push(`${line.description}: harga ${Format.rupiah(line.price)} berbeda ${InvoiceAudit.percentText(variance.percent)} dari harga di Daftar Barang, ${Format.rupiah(variance.dbPrice)}.`);
-        }
+    const manual = draft.lines.filter((line) => !PoLine.isPo(line));
+    const prices = [];
+    for (const line of manual) {
+      const variance = InvoiceAudit.priceVariance(line, items);
+      if (variance && Math.abs(variance.percent) >= InvoiceAudit.PRICE_TOLERANCE_PERCENT) {
+        prices.push(`${line.description}: harga ${Format.rupiah(line.price)} berbeda ${InvoiceAudit.percentText(variance.percent)} dari harga di Daftar Barang, ${Format.rupiah(variance.dbPrice)}.`);
       }
     }
-    return warnings;
+    const overPo = draft.lines.filter((line) => PoLine.isPo(line) && line.qty > line.poQty)
+      .map((line) => `${line.description}: banyak ${Format.qty(line.qty)} melebihi PO ${Format.qty(line.poQty)}.`);
+    return [
+      check('Total dihitung ulang dan cocok', InvoiceCalculator.isConsistent(draft) ? [] : ['Total tidak cocok dengan barisnya.']),
+      check('Bukan tagihan ganda', duplicate
+        ? [`Kemungkinan tagihan ganda: ${duplicate.number} bertanggal ${Format.date(duplicate.date)} punya total sama, ${Format.rupiah(duplicate.totals.total)}.`]
+        : [], true),
+      check('Tanggal invoice wajar', dates, true),
+      check('Tidak ada barang tercatat dua kali',
+        InvoiceAudit.repeatedLines(manual).map((line) => `${line.description} tercatat lebih dari satu baris.`), true),
+      // When editing an old invoice, a DB price that has since risen is not an error.
+      !id && check('Harga sesuai Daftar Barang', prices, true),
+      draft.lines.some(PoLine.isPo) && check('Banyak barang tidak melebihi PO', overPo),
+      check('Nama pelanggan terisi', draft.customer.name.trim() ? [] : ['Nama pelanggan masih kosong.']),
+      check('Rekening bank tercantum', bank && bank.account.trim() ? [] : ['Invoice ini tercetak tanpa nomor rekening.']),
+    ].filter(Boolean);
+  }
+
+  // The checks worth stopping for before a save. The rest are shown, but never interrupt.
+  static review(draft, context) {
+    return InvoiceAudit.checks(draft, context).filter((check) => check.warns).flatMap((check) => check.problems);
+  }
+
+  static summary(checks) {
+    const flagged = checks.filter((check) => !check.ok).length;
+    return flagged === 0
+      ? `Sudah diperiksa ${checks.length} hal. Semua sesuai.`
+      : `Sudah diperiksa ${checks.length} hal. ${checks.length - flagged} sesuai, ${flagged} perlu dilihat.`;
   }
 
   static percentText(percent) {
@@ -1922,6 +2046,355 @@ class Xlsx {
     end.setUint32(12, size, true);
     end.setUint32(16, offset, true);
     return new Blob([...parts, ...directory, end], { type: Xlsx.TYPE });
+  }
+}
+
+</script>
+  <script>
+// QR codes for short text such as a sync address, drawn without any library.
+// Byte mode, error correction level M, versions 1 to 9 (up to 180 bytes), following ISO/IEC 18004.
+class QrCode {
+  // Per version (index 0 = version 1): total codewords, error-correction codewords per block, and block count.
+  static TOTAL = [26, 44, 70, 100, 134, 172, 196, 242, 292];
+  static ECC_PER_BLOCK = [10, 16, 26, 18, 24, 16, 18, 22, 22];
+  static BLOCKS = [1, 1, 1, 2, 2, 4, 4, 4, 5];
+  static ALIGNMENT = [[], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46]];
+
+  // Returns a square matrix of booleans (true = dark), without the quiet zone.
+  static encode(text) {
+    const bytes = [...new TextEncoder().encode(text)];
+    const version = QrCode.TOTAL.findIndex((total, index) => QrCode.capacity(index) >= bytes.length + 2) + 1;
+    if (version === 0) throw new Error('Teks terlalu panjang untuk QR.');
+    const data = QrCode.dataCodewords(bytes, QrCode.capacity(version - 1));
+    const codewords = QrCode.withErrorCorrection(data, version);
+    const size = version * 4 + 17;
+    const grid = Array.from({ length: size }, () => new Array(size).fill(false));
+    const reserved = Array.from({ length: size }, () => new Array(size).fill(false));
+    const set = (x, y, dark) => { grid[y][x] = dark; reserved[y][x] = true; };
+    QrCode.drawPatterns(set, size, version);
+    QrCode.drawFormat(set, size, 0);
+    QrCode.placeCodewords(grid, reserved, codewords);
+    let best = null;
+    for (let mask = 0; mask < 8; mask += 1) {
+      const candidate = grid.map((row) => [...row]);
+      QrCode.applyMask(candidate, reserved, mask);
+      QrCode.drawFormat((x, y, dark) => { candidate[y][x] = dark; }, size, mask);
+      const score = QrCode.penalty(candidate);
+      if (!best || score < best.score) best = { score, matrix: candidate };
+    }
+    return best.matrix;
+  }
+
+  static capacity(versionIndex) {
+    return QrCode.TOTAL[versionIndex] - QrCode.ECC_PER_BLOCK[versionIndex] * QrCode.BLOCKS[versionIndex];
+  }
+
+  // Mode 0100 (byte), an 8-bit length, the bytes, a terminator, then the standard pad bytes.
+  static dataCodewords(bytes, capacity) {
+    const bits = [];
+    const push = (value, length) => { for (let i = length - 1; i >= 0; i -= 1) bits.push((value >>> i) & 1); };
+    push(0b0100, 4);
+    push(bytes.length, 8);
+    bytes.forEach((byte) => push(byte, 8));
+    push(0, Math.min(4, capacity * 8 - bits.length));
+    while (bits.length % 8) bits.push(0);
+    const codewords = [];
+    for (let i = 0; i < bits.length; i += 8) codewords.push(bits.slice(i, i + 8).reduce((value, bit) => (value << 1) | bit, 0));
+    for (let pad = 0; codewords.length < capacity; pad += 1) codewords.push(pad % 2 ? 0x11 : 0xEC);
+    return codewords;
+  }
+
+  static multiply(x, y) {
+    let z = 0;
+    for (let i = 7; i >= 0; i -= 1) {
+      z = (z << 1) ^ ((z >>> 7) * 0x11D);
+      z ^= ((y >>> i) & 1) * x;
+    }
+    return z;
+  }
+
+  static divisor(degree) {
+    const result = new Array(degree).fill(0);
+    result[degree - 1] = 1;
+    let root = 1;
+    for (let i = 0; i < degree; i += 1) {
+      for (let j = 0; j < degree; j += 1) {
+        result[j] = QrCode.multiply(result[j], root);
+        if (j + 1 < degree) result[j] ^= result[j + 1];
+      }
+      root = QrCode.multiply(root, 0x02);
+    }
+    return result;
+  }
+
+  static remainder(data, divisor) {
+    const result = new Array(divisor.length).fill(0);
+    for (const byte of data) {
+      const factor = byte ^ result.shift();
+      result.push(0);
+      divisor.forEach((coefficient, i) => { result[i] ^= QrCode.multiply(coefficient, factor); });
+    }
+    return result;
+  }
+
+  // Splits the data into blocks, adds Reed-Solomon codewords to each, then interleaves them.
+  static withErrorCorrection(data, version) {
+    const index = version - 1;
+    const blockCount = QrCode.BLOCKS[index];
+    const eccLength = QrCode.ECC_PER_BLOCK[index];
+    const total = QrCode.TOTAL[index];
+    const shortBlocks = blockCount - (total % blockCount);
+    const shortLength = Math.floor(total / blockCount);
+    const divisor = QrCode.divisor(eccLength);
+    const blocks = [];
+    for (let i = 0, offset = 0; i < blockCount; i += 1) {
+      const length = shortLength - eccLength + (i < shortBlocks ? 0 : 1);
+      const chunk = data.slice(offset, offset + length);
+      offset += length;
+      const ecc = QrCode.remainder(chunk, divisor);
+      if (i < shortBlocks) chunk.push(null);
+      blocks.push(chunk.concat(ecc));
+    }
+    const result = [];
+    for (let i = 0; i < blocks[0].length; i += 1) {
+      blocks.forEach((block) => { if (block[i] !== null) result.push(block[i]); });
+    }
+    return result;
+  }
+
+  static drawPatterns(set, size, version) {
+    for (let i = 0; i < size; i += 1) {
+      set(6, i, i % 2 === 0);
+      set(i, 6, i % 2 === 0);
+    }
+    for (const [cx, cy] of [[3, 3], [size - 4, 3], [3, size - 4]]) {
+      for (let dy = -4; dy <= 4; dy += 1) {
+        for (let dx = -4; dx <= 4; dx += 1) {
+          const x = cx + dx;
+          const y = cy + dy;
+          const distance = Math.max(Math.abs(dx), Math.abs(dy));
+          if (x >= 0 && x < size && y >= 0 && y < size) set(x, y, distance !== 2 && distance !== 4);
+        }
+      }
+    }
+    const positions = QrCode.ALIGNMENT[version - 1];
+    const last = positions.length - 1;
+    positions.forEach((cy, i) => positions.forEach((cx, j) => {
+      if ((i === 0 && j === 0) || (i === 0 && j === last) || (i === last && j === 0)) return;
+      for (let dy = -2; dy <= 2; dy += 1) {
+        for (let dx = -2; dx <= 2; dx += 1) set(cx + dx, cy + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+      }
+    }));
+    if (version >= 7) {
+      const bits = QrCode.versionBits(version);
+      for (let i = 0; i < 18; i += 1) {
+        const dark = ((bits >>> i) & 1) === 1;
+        const a = size - 11 + (i % 3);
+        const b = Math.floor(i / 3);
+        set(a, b, dark);
+        set(b, a, dark);
+      }
+    }
+  }
+
+  // Versions 7 and up carry their number with a BCH (18,6) check.
+  static versionBits(version) {
+    let remainder = version;
+    for (let i = 0; i < 12; i += 1) remainder = (remainder << 1) ^ ((remainder >>> 11) * 0x1F25);
+    return (version << 12) | remainder;
+  }
+
+  // Level M has format bits 00; the 15-bit word carries the mask and its BCH check, masked by 0x5412.
+  static formatBits(mask) {
+    let remainder = mask;
+    for (let i = 0; i < 10; i += 1) remainder = (remainder << 1) ^ ((remainder >>> 9) * 0x537);
+    return ((mask << 10) | remainder) ^ 0x5412;
+  }
+
+  static drawFormat(set, size, mask) {
+    const bits = QrCode.formatBits(mask);
+    const bit = (i) => ((bits >>> i) & 1) === 1;
+    for (let i = 0; i <= 5; i += 1) set(8, i, bit(i));
+    set(8, 7, bit(6));
+    set(8, 8, bit(7));
+    set(7, 8, bit(8));
+    for (let i = 9; i < 15; i += 1) set(14 - i, 8, bit(i));
+    for (let i = 0; i < 8; i += 1) set(size - 1 - i, 8, bit(i));
+    for (let i = 8; i < 15; i += 1) set(8, size - 15 + i, bit(i));
+    set(8, size - 8, true);
+  }
+
+  // Two-column zigzag from the bottom right, skipping the vertical timing column.
+  static placeCodewords(grid, reserved, codewords) {
+    const size = grid.length;
+    let bitIndex = 0;
+    for (let right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (let vertical = 0; vertical < size; vertical += 1) {
+        for (let j = 0; j < 2; j += 1) {
+          const x = right - j;
+          const upward = ((right + 1) & 2) === 0;
+          const y = upward ? size - 1 - vertical : vertical;
+          if (!reserved[y][x] && bitIndex < codewords.length * 8) {
+            grid[y][x] = ((codewords[bitIndex >>> 3] >>> (7 - (bitIndex & 7))) & 1) === 1;
+            bitIndex += 1;
+          }
+        }
+      }
+    }
+  }
+
+  static MASKS = [
+    (x, y) => (x + y) % 2 === 0,
+    (x, y) => y % 2 === 0,
+    (x) => x % 3 === 0,
+    (x, y) => (x + y) % 3 === 0,
+    (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0,
+    (x, y) => ((x * y) % 2) + ((x * y) % 3) === 0,
+    (x, y) => (((x * y) % 2) + ((x * y) % 3)) % 2 === 0,
+    (x, y) => (((x + y) % 2) + ((x * y) % 3)) % 2 === 0,
+  ];
+
+  static applyMask(grid, reserved, mask) {
+    const flip = QrCode.MASKS[mask];
+    grid.forEach((row, y) => row.forEach((dark, x) => {
+      if (!reserved[y][x] && flip(x, y)) row[x] = !dark;
+    }));
+  }
+
+  // The four standard penalty rules, so the chosen mask scans easily.
+  static penalty(grid) {
+    const size = grid.length;
+    const lines = [...grid, ...grid[0].map((_, x) => grid.map((row) => row[x]))];
+    let score = 0;
+    for (const line of lines) {
+      let run = 1;
+      for (let i = 1; i <= size; i += 1) {
+        if (i < size && line[i] === line[i - 1]) {
+          run += 1;
+        } else {
+          if (run >= 5) score += run - 2;
+          run = 1;
+        }
+      }
+      const text = line.map((dark) => (dark ? '1' : '0')).join('');
+      for (const pattern of ['10111010000', '00001011101']) {
+        for (let at = text.indexOf(pattern); at !== -1; at = text.indexOf(pattern, at + 1)) score += 40;
+      }
+    }
+    let dark = 0;
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
+        if (grid[y][x]) dark += 1;
+        if (x + 1 < size && y + 1 < size) {
+          const color = grid[y][x];
+          if (grid[y][x + 1] === color && grid[y + 1][x] === color && grid[y + 1][x + 1] === color) score += 3;
+        }
+      }
+    }
+    return score + Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
+  }
+
+  // One SVG path with a 4-module quiet zone; crisp at any size and in print.
+  static svg(text, label) {
+    const matrix = QrCode.encode(text);
+    const size = matrix.length + 8;
+    const path = [];
+    matrix.forEach((row, y) => row.forEach((dark, x) => { if (dark) path.push(`M${x + 4} ${y + 4}h1v1h-1z`); }));
+    const namespace = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(namespace, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
+    svg.setAttribute('shape-rendering', 'crispEdges');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', label);
+    const background = document.createElementNS(namespace, 'rect');
+    background.setAttribute('width', size);
+    background.setAttribute('height', size);
+    background.setAttribute('fill', '#ffffff');
+    const modules = document.createElementNS(namespace, 'path');
+    modules.setAttribute('d', path.join(''));
+    modules.setAttribute('fill', '#000000');
+    svg.append(background, modules);
+    return svg;
+  }
+}
+
+</script>
+  <script>
+// The part this device plays. The laptop keeps the books and gives every invoice its final number;
+// a phone only writes drafts, so two devices can never hand out the same number.
+// Both facts here belong to the device, not to the shop, so they stay out of the synced data.
+class Device {
+  static ROLE_KEY = 'yearendproject-role';
+  static SYNC_KEY = 'yearendproject-last-sync';
+  static ROLES = { laptop: 'Laptop utama', phone: 'HP' };
+
+  static read(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static write(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      // Private windows may refuse storage. The role then falls back to the guess below.
+    }
+  }
+
+  static role() {
+    const saved = Device.read(Device.ROLE_KEY);
+    if (Device.ROLES[saved]) return saved;
+    // A device that cannot keep its data in a folder and is used by touch is a phone.
+    return !StorageManager.supportsFiles() && window.matchMedia('(pointer: coarse)').matches ? 'phone' : 'laptop';
+  }
+
+  static setRole(role) {
+    Device.write(Device.ROLE_KEY, role);
+  }
+
+  static isPhone() {
+    return Device.role() === 'phone';
+  }
+
+  // When this device last finished a sync with the other one, as an ISO time, or null.
+  static lastSync() {
+    return Device.read(Device.SYNC_KEY);
+  }
+
+  static markSynced() {
+    Device.write(Device.SYNC_KEY, new Date().toISOString());
+  }
+}
+
+</script>
+  <script>
+// Short facts for the home page and the sync panel, worked out from data already in memory.
+class Pulse {
+  // Today's invoices and what is still owed, so the day can be read in one line.
+  static today(invoices, today) {
+    const live = invoices.filter((invoice) => !invoice.voided);
+    const made = live.filter((invoice) => invoice.date === today);
+    const open = live.filter((invoice) => !invoice.paid);
+    const late = open.map((invoice) => DateUtil.daysBetween(Reminder.dueDate(invoice), today));
+    return {
+      count: made.length,
+      total: made.reduce((sum, invoice) => sum + invoice.totals.total, 0),
+      owed: open.reduce((sum, invoice) => sum + InvoiceRepository.outstanding(invoice), 0),
+      oldestLate: Math.max(0, ...late),
+    };
+  }
+
+  // 'hari ini 14.20', 'kemarin 14.20' or '3 hari lalu', from an ISO time.
+  static ago(iso, now = new Date()) {
+    const then = new Date(iso);
+    const days = DateUtil.daysBetween(DateUtil.toIso(then), DateUtil.toIso(now));
+    const clock = `${String(then.getHours()).padStart(2, '0')}.${String(then.getMinutes()).padStart(2, '0')}`;
+    if (days <= 0) return `hari ini ${clock}`;
+    return days === 1 ? `kemarin ${clock}` : `${days} hari lalu`;
   }
 }
 
@@ -3042,11 +3515,30 @@ class Module {
   // Asks when the money reached the bank, since that is the date the books need, not the date of the click.
   // Returns that date, or null when the vendor goes back.
   async askPaidDate(invoices) {
+    // A part already paid is not in this transfer, so only what is still owed is shown to match the bank.
+    const total = invoices.reduce((sum, invoice) => sum + InvoiceRepository.outstanding(invoice), 0);
+    const error = h('p', { class: 'dialog-error', role: 'alert' });
+    const paid = this.paidDate(error);
+    const confirmed = await Dialog.open('Tandai sudah dibayar', [
+      h('p', {}, invoices.length === 1
+        ? `${invoices[0].number}, ${Format.rupiah(total)}.`
+        : `${invoices.length} invoice, total ${Format.rupiah(total)}. Cocokkan dengan uang yang masuk di rekening.`),
+      invoices.length > 1 && h('ul', { class: 'paid-list' }, invoices.map((invoice) =>
+        h('li', {}, `${invoice.number} • ${invoice.customer.name} • ${Format.rupiah(InvoiceRepository.outstanding(invoice))}`))),
+      paid.nodes,
+      error,
+    ], [
+      { label: 'Kembali', value: false },
+      { label: 'Ya, sudah dibayar', value: true, primary: true, validate: paid.validate },
+    ]);
+    return confirmed ? paid.date.value : null;
+  }
+
+  // The bank date box shared by every payment dialog. validate() reports into the given error line.
+  paidDate(error) {
     const today = DateUtil.today();
-    const total = invoices.reduce((sum, invoice) => sum + invoice.totals.total, 0);
     const date = h('input', { type: 'date', value: today, max: today });
     Module.pickerOnClick(date);
-    const error = h('p', { class: 'dialog-error', role: 'alert' });
     // The date box follows the browser language, so 11/05 is also spelled out and never read as 11 May.
     const spelled = h('span', {});
     const spell = () => { spelled.textContent = /^\d{4}-\d{2}-\d{2}$/.test(date.value) ? `${RangeCalendar.longDate(date.value)}. ` : ''; };
@@ -3068,20 +3560,12 @@ class Module {
       date.focus();
       return false;
     };
-    const confirmed = await Dialog.open('Tandai sudah dibayar', [
-      h('p', {}, invoices.length === 1
-        ? `${invoices[0].number}, ${Format.rupiah(total)}.`
-        : `${invoices.length} invoice, total ${Format.rupiah(total)}. Cocokkan dengan uang yang masuk di rekening.`),
-      invoices.length > 1 && h('ul', { class: 'paid-list' }, invoices.map((invoice) =>
-        h('li', {}, `${invoice.number} • ${invoice.customer.name} • ${Format.rupiah(invoice.totals.total)}`))),
-      this.field('Tanggal uang masuk', date, h('span', { 'aria-live': 'polite' }, spelled, 'Lihat di mutasi rekening'), true),
-      h('div', { class: 'quick-dates' }, quick('Hari ini', today), quick('Kemarin', DateUtil.addDays(today, -1))),
-      error,
-    ], [
-      { label: 'Kembali', value: false },
-      { label: 'Ya, sudah dibayar', value: true, primary: true, validate },
-    ]);
-    return confirmed ? date.value : null;
+    return {
+      date,
+      validate,
+      nodes: [this.field('Tanggal uang masuk', date, h('span', { 'aria-live': 'polite' }, spelled, 'Lihat di mutasi rekening'), true),
+        h('div', { class: 'quick-dates' }, quick('Hari ini', today), quick('Kemarin', DateUtil.addDays(today, -1)))],
+    };
   }
 
   // Every page opens the same way: where it leads back to, what it is, and its main actions.
@@ -3093,6 +3577,20 @@ class Module {
         h('h1', {}, title),
         description && h('p', { class: 'muted' }, description)),
       actions && h('div', { class: 'page-actions' }, actions));
+  }
+
+  // The audit as the vendor reads it: one line of verdict, and every check behind it.
+  // It opens by itself when something needs a second look.
+  checklist(checks, open) {
+    const flagged = checks.some((check) => !check.ok);
+    return h('details', { class: 'checks no-print', open: open || flagged },
+      h('summary', { class: flagged ? 'is-flagged' : '' }, InvoiceAudit.summary(checks)),
+      h('ul', {}, checks.map((check) => h('li', { class: check.ok ? '' : 'is-flagged' },
+        h('span', { class: 'check-mark', 'aria-hidden': 'true' }, check.ok ? '✓' : '!'),
+        h('span', {},
+          h('span', { class: 'sr-only' }, check.ok ? 'Sesuai: ' : 'Perlu dilihat: '),
+          check.label,
+          check.problems.map((problem) => h('span', { class: 'check-problem' }, problem)))))));
   }
 
   // One figure with its label, as shown above a list or report.
@@ -3191,6 +3689,27 @@ class DataStore {
     return pending;
   }
 
+  // A copy of the data as it is now, taken before a risky change such as a sync, so that change can be undone.
+  // Returns the copy as text. It waits its turn, so it never catches a half-finished save.
+  safetyCopy(reason) {
+    const pending = this.queue.then(async () => {
+      const text = DataFormat.serialize(this.data, 0);
+      if (this.backend.saveSafetyCopy) await this.backend.saveSafetyCopy(reason, text);
+      return text;
+    });
+    this.queue = pending.catch(() => {});
+    return pending;
+  }
+
+  // Puts a whole earlier copy back in place of the current data.
+  restore(text) {
+    const { data } = DataFormat.parse(text);
+    return this.update((draft) => {
+      for (const key of Object.keys(draft)) delete draft[key];
+      Object.assign(draft, data);
+    });
+  }
+
   // Queued, so this tab's own save can never look like a change from another tab.
   isStale() {
     const pending = this.queue.then(() => this.backend.isStale());
@@ -3206,6 +3725,34 @@ class FileBackend {
   static DATA_FILE = 'yearendproject-data.json';
   static SNAPSHOT_FOLDER = 'history';
   static SNAPSHOT_KEEP = 14;
+  static MONTHS_KEEP = 12;
+  static SAFETY_KEEP = 10;
+
+  // Tells what a file in the vault is from its name: a daily copy, or a copy taken before a risky change.
+  static describe(name) {
+    const daily = name.match(/^data-(\d{4}-\d{2}-\d{2})\.json$/);
+    if (daily) return { name, kind: 'daily', date: daily[1], at: daily[1] };
+    const safety = name.match(/^sebelum-([a-z]+)-(\d{4}-\d{2}-\d{2})-(\d{2})(\d{2})(\d{2})\.json$/);
+    if (!safety) return null;
+    const [, reason, date, hour, minute, second] = safety;
+    return { name, kind: 'safety', reason, date, time: `${hour}.${minute}`, at: `${date}T${hour}:${minute}:${second}` };
+  }
+
+  static safetyName(reason, now = new Date()) {
+    const two = (value) => String(value).padStart(2, '0');
+    return `sebelum-${reason}-${DateUtil.toIso(now)}-${two(now.getHours())}${two(now.getMinutes())}${two(now.getSeconds())}.json`;
+  }
+
+  // Daily copies beyond the newest 14 are removed, except the first copy of each of the last 12 months,
+  // so a mistake noticed weeks later can still be undone.
+  static outdated(names) {
+    const sorted = [...names].sort().reverse();
+    const firstOfMonth = new Map();
+    for (const name of sorted) firstOfMonth.set(name.slice(5, 12), name);
+    const months = [...firstOfMonth.keys()].sort().reverse().slice(0, FileBackend.MONTHS_KEEP);
+    const keep = new Set([...sorted.slice(0, FileBackend.SNAPSHOT_KEEP), ...months.map((month) => firstOfMonth.get(month))]);
+    return sorted.filter((name) => !keep.has(name));
+  }
 
   constructor(directory) {
     this.directory = directory;
@@ -3288,8 +3835,46 @@ class FileBackend {
     const name = `data-${DateUtil.today()}.json`;
     if (names.includes(name)) return;
     await FileBackend.writeFile(folder, name, currentText);
-    const outdated = [name, ...names].sort().reverse().slice(FileBackend.SNAPSHOT_KEEP);
-    await Promise.all(outdated.map((old) => folder.removeEntry(old)));
+    await Promise.all(FileBackend.outdated([name, ...names]).map((old) => folder.removeEntry(old)));
+  }
+
+  // Every copy in the vault, newest first.
+  async backups() {
+    const folder = await this.directory.getDirectoryHandle(FileBackend.SNAPSHOT_FOLDER, { create: true });
+    const found = [];
+    for await (const [name] of folder.entries()) {
+      const backup = FileBackend.describe(name);
+      if (backup) found.push(backup);
+    }
+    return found.sort((a, b) => b.at.localeCompare(a.at));
+  }
+
+  async readBackup(name) {
+    const folder = await this.directory.getDirectoryHandle(FileBackend.SNAPSHOT_FOLDER);
+    return (await (await folder.getFileHandle(name)).getFile()).text();
+  }
+
+  // Only a copy from the vault can be removed this way, never the data file itself.
+  async removeBackup(name) {
+    if (!FileBackend.describe(name)) return;
+    const folder = await this.directory.getDirectoryHandle(FileBackend.SNAPSHOT_FOLDER);
+    await folder.removeEntry(name);
+  }
+
+  async saveSafetyCopy(reason, text) {
+    const folder = await this.directory.getDirectoryHandle(FileBackend.SNAPSHOT_FOLDER, { create: true });
+    await FileBackend.writeFile(folder, FileBackend.safetyName(reason), text);
+    const old = (await this.backups()).filter((backup) => backup.kind === 'safety').slice(FileBackend.SAFETY_KEEP);
+    await Promise.all(old.map((backup) => folder.removeEntry(backup.name)));
+  }
+
+  // A second data file beside the real one, as OneDrive makes when two computers save at the same moment.
+  async strays() {
+    const names = [];
+    for await (const [name] of this.directory.entries()) {
+      if (name !== FileBackend.DATA_FILE && /^yearendproject-data.*\.json$/i.test(name)) names.push(name);
+    }
+    return names;
   }
 
   // Runs on every window focus, so it reads only the start of a file that can be many megabytes.
@@ -3363,6 +3948,33 @@ class BrowserBackend {
     const { data, revision } = DataFormat.parse(text);
     this.revision = revision;
     return data;
+  }
+
+  // A phone has little room, so it keeps only the last few copies taken before a risky change.
+  static SAFETY_KEEP = 3;
+
+  async backups() {
+    const keys = await this.run('readonly', (store) => store.getAllKeys());
+    return keys.map((key) => FileBackend.describe(String(key))).filter(Boolean).sort((a, b) => b.at.localeCompare(a.at));
+  }
+
+  readBackup(name) {
+    return this.run('readonly', (store) => store.get(name));
+  }
+
+  async removeBackup(name) {
+    if (FileBackend.describe(name)) await this.run('readwrite', (store) => store.delete(name));
+  }
+
+  async saveSafetyCopy(reason, text) {
+    await this.run('readwrite', (store) => store.put(text, FileBackend.safetyName(reason)));
+    for (const backup of (await this.backups()).slice(BrowserBackend.SAFETY_KEEP)) {
+      await this.run('readwrite', (store) => store.delete(backup.name));
+    }
+  }
+
+  async strays() {
+    return [];
   }
 
   async isStale() {
@@ -3648,8 +4260,9 @@ class InvoiceRepository {
       const key = InvoiceRepository.customerKey(name);
       if (!groups.has(key)) groups.set(key, { name, amounts: InvoiceRepository.AGING.map(() => 0), total: 0, invoices: [] });
       const group = groups.get(key);
-      group.amounts[InvoiceRepository.agingBucket(invoice, today)] += invoice.totals.total;
-      group.total += invoice.totals.total;
+      const owed = InvoiceRepository.outstanding(invoice);
+      group.amounts[InvoiceRepository.agingBucket(invoice, today)] += owed;
+      group.total += owed;
       group.invoices.push(invoice);
     }
     const overdue = (group) => group.total - group.amounts[0];
@@ -3673,12 +4286,45 @@ class InvoiceRepository {
     };
   }
 
+  static PAYMENT_KINDS = { transfer: 'Transfer', pph: 'Potongan PPh' };
+
+  // Invoices from before partial payments carry no list: a paid one was paid in full on its paid date.
+  static payments(invoice) {
+    if (Array.isArray(invoice.payments)) return invoice.payments;
+    return invoice.paid ? [{ date: invoice.paidAt || invoice.date, amount: invoice.totals.total, kind: 'transfer' }] : [];
+  }
+
+  static received(invoice, kind) {
+    return InvoiceRepository.payments(invoice).filter((payment) => !kind || payment.kind === kind)
+      .reduce((sum, payment) => sum + payment.amount, 0);
+  }
+
+  // Withheld tax counts as paid, because the hotel hands over its tax slip for that part.
+  static outstanding(invoice) {
+    return invoice.voided ? 0 : Math.max(0, invoice.totals.total - InvoiceRepository.received(invoice));
+  }
+
+  // Money already received fixes the bill, so the invoice can no longer be edited or voided.
+  static locked(invoice) {
+    return invoice.paid || invoice.voided || InvoiceRepository.received(invoice) > 0;
+  }
+
+  // Whatever is still owed arrives with this transfer.
+  static settle(invoice, date) {
+    if (invoice.payments) {
+      invoice.payments = [...invoice.payments, { date, amount: InvoiceRepository.outstanding(invoice), kind: 'transfer' }];
+    }
+    invoice.paid = true;
+    invoice.paidAt = date;
+  }
+
   static log(invoice, action, detail) {
     invoice.history = [...(invoice.history || []), { at: new Date().toISOString(), action, detail: detail || '' }];
   }
 
   // Number, counter, and invoice are saved together, so duplicate numbers are impossible.
-  create(draft) {
+  // origin is the phone draft this invoice is posted from. It leaves the draft box in the same save.
+  create(draft, origin) {
     return this.store.update((data) => {
       const config = ConfigRepository.merge(data.config);
       const invoice = {
@@ -3698,7 +4344,12 @@ class InvoiceRepository {
         invoice.sjNumber = InvoiceRepository.allocate(
           InvoiceRepository.usedSjNumbers(data.invoices), config.sjNumber, draft.date, 'SJ');
       }
-      InvoiceRepository.log(invoice, 'Dibuat', Format.rupiah(invoice.totals.total));
+      if (origin) {
+        invoice.draftUid = origin.uid;
+        invoice.history = [{ at: origin.createdAt, action: 'Draf dibuat di HP', detail: '' }];
+        data.drafts = DraftRepository.list(data).filter((candidate) => candidate.uid !== origin.uid);
+      }
+      InvoiceRepository.log(invoice, origin ? 'Diposting' : 'Dibuat', Format.rupiah(invoice.totals.total));
       data.config = config;
       data.invoices.push(invoice);
       data.nextInvoiceId += 1;
@@ -3728,7 +4379,7 @@ class InvoiceRepository {
   // A paid or voided invoice must not change value.
   revise(id, fields) {
     return this.mutate(id, (invoice, { config, existing }) => {
-      if (invoice.paid || invoice.voided) throw new InvoiceLockedError('Invoice ini sudah dibayar atau dibatalkan.');
+      if (InvoiceRepository.locked(invoice)) throw new InvoiceLockedError('Invoice ini sudah dibayar atau dibatalkan.');
       const previous = invoice.totals.total;
       const previousTerm = invoice.termDays;
       Object.assign(invoice, fields);
@@ -3755,13 +4406,44 @@ class InvoiceRepository {
   setPaid(id, paid) {
     return this.mutate(id, (invoice) => {
       if (invoice.voided) throw new InvoiceLockedError('Invoice ini sudah dibatalkan.');
-      if (invoice.paid === paid) return;
+      const recorded = invoice.payments ? InvoiceRepository.received(invoice) : 0;
+      if (invoice.paid === paid && !(!paid && recorded > 0)) return;
+      if (paid) {
+        InvoiceRepository.settle(invoice, DateUtil.today());
+        InvoiceRepository.log(invoice, 'Ditandai sudah dibayar', '');
+        return;
+      }
       // The bank date was typed in when it was marked paid, so it stays findable in the history after an unmark.
       const previous = invoice.paidAt;
-      invoice.paid = paid;
-      invoice.paidAt = paid ? DateUtil.today() : null;
-      InvoiceRepository.log(invoice, paid ? 'Ditandai sudah dibayar' : 'Ditandai belum dibayar',
-        !paid && previous ? `Sebelumnya uang masuk ${Format.date(previous)}` : '');
+      invoice.paid = false;
+      invoice.paidAt = null;
+      delete invoice.payments;
+      const notes = [previous && `Sebelumnya uang masuk ${Format.date(previous)}`, recorded > 0 && `pembayaran ${Format.rupiah(recorded)} dihapus`];
+      InvoiceRepository.log(invoice, 'Ditandai belum dibayar', notes.filter(Boolean).join(' • '));
+    });
+  }
+
+  // Part of a bill, such as a first transfer or the tax the hotel withheld. Once nothing is left it is paid.
+  // amounts is { transfer, pph } in whole rupiah.
+  recordPayment(id, date, amounts) {
+    return this.mutate(id, (invoice) => {
+      if (invoice.paid || invoice.voided) throw new InvoiceLockedError('Invoice ini sudah dibayar atau dibatalkan.');
+      const owed = InvoiceRepository.outstanding(invoice);
+      const added = Object.keys(InvoiceRepository.PAYMENT_KINDS).filter((kind) => amounts[kind] > 0)
+        .map((kind) => ({ date, amount: amounts[kind], kind }));
+      const sum = added.reduce((total, payment) => total + payment.amount, 0);
+      if (!added.every((payment) => Number.isSafeInteger(payment.amount)) || sum === 0 || sum > owed) {
+        throw new InvoiceLockedError(`Sisa tagihan ${invoice.number} sekarang ${Format.rupiah(owed)}. Periksa lagi jumlahnya.`);
+      }
+      invoice.payments = [...InvoiceRepository.payments(invoice), ...added];
+      const left = owed - sum;
+      if (left === 0) {
+        invoice.paid = true;
+        invoice.paidAt = date;
+      }
+      const detail = added.map((payment) => `${InvoiceRepository.PAYMENT_KINDS[payment.kind]} ${Format.rupiah(payment.amount)}`).join(' + ');
+      InvoiceRepository.log(invoice, left === 0 ? 'Lunas' : 'Dibayar sebagian',
+        `${detail} • tanggal ${Format.date(date)}${left ? ` • sisa ${Format.rupiah(left)}` : ''}`);
     });
   }
 
@@ -3774,10 +4456,9 @@ class InvoiceRepository {
         throw new InvoiceLockedError('Ada invoice yang sudah dibatalkan, jadi tidak ada yang ditandai.');
       }
       const unpaid = invoices.filter((invoice) => !invoice.paid);
-      const total = unpaid.reduce((sum, invoice) => sum + invoice.totals.total, 0);
+      const total = unpaid.reduce((sum, invoice) => sum + InvoiceRepository.outstanding(invoice), 0);
       for (const invoice of unpaid) {
-        invoice.paid = true;
-        invoice.paidAt = paidAt;
+        InvoiceRepository.settle(invoice, paidAt);
         const others = unpaid.filter((other) => other !== invoice).map((other) => other.number);
         const received = `Uang masuk ${Format.date(paidAt)}`;
         InvoiceRepository.log(invoice, 'Ditandai sudah dibayar', others.length > 0
@@ -3798,8 +4479,8 @@ class InvoiceRepository {
   // A voided invoice stays stored so its number is never reused.
   voidInvoice(id, reason) {
     return this.mutate(id, (invoice) => {
-      if (invoice.paid) throw new InvoiceLockedError('Invoice yang sudah dibayar tidak bisa dibatalkan.');
       if (invoice.voided) return;
+      if (InvoiceRepository.locked(invoice)) throw new InvoiceLockedError('Invoice yang sudah dibayar tidak bisa dibatalkan.');
       invoice.voided = true;
       invoice.voidedAt = DateUtil.today();
       invoice.voidReason = reason;
@@ -3815,7 +4496,7 @@ class TransferError extends Error {}
 // Separate Export and Import for Invoices, DB, and Generate Config, for example when moving devices.
 class TransferService {
   static SCHEMA = 1;
-  static LABELS = { invoices: 'Invoice', items: 'Daftar Barang', config: 'Pengaturan Toko' };
+  static LABELS = { invoices: 'Invoice', items: 'Daftar Barang', config: 'Pengaturan Toko', sync: 'Semua data' };
 
   constructor(store) {
     this.store = store;
@@ -3837,7 +4518,15 @@ class TransferService {
   }
 
   static RECAP_HEADER = ['Tanggal', 'No. Invoice', 'No. Surat Jalan', 'No. PO', 'Pelanggan', 'Subtotal', 'Diskon', 'DPP', 'PPN',
-    'Tarif PPN (%)', 'Total', 'Termin (hari)', 'Jatuh tempo', 'Status', 'Tanggal uang masuk', 'Keterangan'];
+    'Tarif PPN (%)', 'Total', 'Termin (hari)', 'Jatuh tempo', 'Status', 'Tanggal uang masuk', 'Keterangan',
+    // Added at the end, so formulas the finance team built on the earlier columns do not shift.
+    'Sudah diterima', 'Potongan PPh', 'Sisa'];
+
+  static status(invoice) {
+    if (invoice.voided) return 'Dibatalkan';
+    if (invoice.paid) return 'Sudah dibayar';
+    return InvoiceRepository.received(invoice) > 0 ? 'Dibayar sebagian' : 'Belum dibayar';
+  }
 
   // One row per invoice, oldest first, so the accountant copies nothing by hand.
   // Voided invoices stay listed, because their numbers must be accounted for, but carry no money cells,
@@ -3860,15 +4549,31 @@ class TransferService {
       ...money(invoice),
       Number.isInteger(invoice.termDays) ? invoice.termDays : '',
       { date: Reminder.dueDate(invoice) },
-      invoice.voided ? 'Dibatalkan' : (invoice.paid ? 'Sudah dibayar' : 'Belum dibayar'),
-      invoice.paidAt ? { date: invoice.paidAt } : '',
+      TransferService.status(invoice),
+      TransferService.lastPaymentDate(invoice),
       invoice.voided ? `${invoice.voidReason || 'Dibatalkan'} (total semula ${Format.rupiah(invoice.totals.total)})` : '',
+      ...TransferService.paymentCells(invoice),
     ]);
     const active = sorted.filter((invoice) => !invoice.voided);
     const sum = (key, list = active) => list.reduce((total, invoice) => total + invoice.totals[key], 0);
+    const add = (amount) => active.reduce((total, invoice) => total + amount(invoice), 0);
     const taxed = active.filter((invoice) => invoice.ppnEnabled);
     return [TransferService.RECAP_HEADER, ...rows,
-      ['', '', '', '', totalLabel, sum('subtotal'), sum('discount'), sum('taxBase', taxed), sum('ppn', taxed), '', sum('total')]];
+      ['', '', '', '', totalLabel, sum('subtotal'), sum('discount'), sum('taxBase', taxed), sum('ppn', taxed), '', sum('total'),
+        '', '', '', '', '', add((invoice) => InvoiceRepository.received(invoice, 'transfer')),
+        add((invoice) => InvoiceRepository.received(invoice, 'pph')), add(InvoiceRepository.outstanding)]];
+  }
+
+  // A part payment fills the date column too, so the latest money in is visible before the bill is settled.
+  static lastPaymentDate(invoice) {
+    if (invoice.voided) return '';
+    const dates = InvoiceRepository.payments(invoice).map((payment) => payment.date).sort();
+    return dates.length ? { date: dates[dates.length - 1] } : '';
+  }
+
+  static paymentCells(invoice) {
+    if (invoice.voided) return ['', '', ''];
+    return [InvoiceRepository.received(invoice, 'transfer'), InvoiceRepository.received(invoice, 'pph'), InvoiceRepository.outstanding(invoice)];
   }
 
   // The same columns as Daftar Barang on screen, so the list can be checked or shared with an accountant.
@@ -3884,7 +4589,7 @@ class TransferService {
       const late = DateUtil.daysBetween(due, report.today);
       const bucket = InvoiceRepository.agingBucket(invoice, report.today);
       return [group.name, invoice.number, { date: invoice.date }, { date: due }, late > 0 ? late : '',
-        ...InvoiceRepository.AGING.map((_, index) => (index === bucket ? invoice.totals.total : '')), invoice.totals.total];
+        ...InvoiceRepository.AGING.map((_, index) => (index === bucket ? InvoiceRepository.outstanding(invoice) : '')), InvoiceRepository.outstanding(invoice)];
     }));
     return [header, ...rows, ['TOTAL', '', '', '', '', ...report.amounts, report.total]];
   }
@@ -3917,7 +4622,17 @@ class TransferService {
       && invoice.issuer && invoice.issuer.store
       && (invoice.termDays === undefined || invoice.termDays === null || Reminder.parseTerm(invoice.termDays) === invoice.termDays)
       && (!invoice.paidAt || DateUtil.isValid(invoice.paidAt))
+      && TransferService.validPayments(invoice)
       && InvoiceCalculator.isConsistent(invoice);
+  }
+
+  // Payments may never add up to more than the bill, or the amount still owed would turn negative.
+  static validPayments(invoice) {
+    if (invoice.payments === undefined) return true;
+    if (!Array.isArray(invoice.payments)) return false;
+    const sound = invoice.payments.every((payment) => payment && DateUtil.isValid(payment.date)
+      && Number.isSafeInteger(payment.amount) && payment.amount > 0 && InvoiceRepository.PAYMENT_KINDS[payment.kind]);
+    return sound && InvoiceRepository.received(invoice) <= invoice.totals.total;
   }
 
   static validItem(item) {
@@ -3940,23 +4655,168 @@ class TransferService {
       throw new TransferError(`Berkas ini berisi ${TransferService.LABELS[file.kind]}, bukan ${TransferService.LABELS[kind]}.`);
     }
     if (file.schema !== TransferService.SCHEMA) throw new TransferError('Berkas ini dibuat oleh versi situs yang berbeda.');
-    if (kind === 'invoices') {
+    // A sync file carries all three parts, and each is checked by the same rule as its own export.
+    for (const part of kind === 'sync' ? ['config', 'items', 'invoices'] : [kind]) TransferService.checkPart(file, part);
+    if (kind === 'sync' && !(Array.isArray(file.drafts || []) && (file.drafts || []).every(TransferService.validDraft))) {
+      throw new TransferError('Import dibatalkan: ada draf yang rusak atau totalnya tidak cocok.');
+    }
+    return file;
+  }
+
+  static checkPart(file, part) {
+    if (part === 'invoices') {
       if (!Array.isArray(file.invoices)) throw new TransferError('Isi berkas tidak lengkap.');
       const broken = file.invoices.find((invoice) => !TransferService.validInvoice(invoice));
       if (broken) throw new TransferError(`Import dibatalkan: invoice ${broken.number || 'tanpa nomor'} rusak atau totalnya tidak cocok.`);
-    } else if (kind === 'items') {
+    } else if (part === 'items') {
       if (!Array.isArray(file.items)) throw new TransferError('Isi berkas tidak lengkap.');
       const broken = file.items.find((item) => !TransferService.validItem(item));
       if (broken) throw new TransferError(`Import dibatalkan: data barang ${broken.description || 'tanpa nama'} tidak lengkap.`);
     } else if (!file.config || !file.config.store) {
       throw new TransferError('Isi berkas tidak lengkap.');
     }
-    return file;
   }
 
   static sameInvoice(a, b) {
     const content = ({ id, ...rest }) => JSON.stringify(rest);
     return content(a) === content(b);
+  }
+
+  // A draft rides along in a sync file and is checked as strictly as an invoice.
+  static validDraft(draft) {
+    return Boolean(draft) && typeof draft.uid === 'string' && draft.uid !== ''
+      && typeof draft.createdAt === 'string' && typeof draft.updatedAt === 'string'
+      && Boolean(draft.fields) && Array.isArray(draft.fields.lines) && DateUtil.isValid(draft.fields.date)
+      && Boolean(draft.fields.customer) && typeof draft.fields.customer.name === 'string'
+      && InvoiceCalculator.isConsistent({ ...draft.fields, totals: draft.totals });
+  }
+
+  // Everything one device holds, for the other device on the same network.
+  syncFile(role = Device.role()) {
+    return this.store.read((data) => {
+      const config = ConfigRepository.merge(data.config);
+      return {
+        app: DataFormat.APP,
+        kind: 'sync',
+        schema: TransferService.SCHEMA,
+        exportedAt: new Date().toISOString(),
+        role,
+        config,
+        items: data.items,
+        invoices: data.invoices,
+        drafts: DraftRepository.list(data),
+        returnedDrafts: data.returnedDrafts || [],
+        sequence: { invoice: config.invoiceNumber.next, sj: config.sjNumber.next },
+      };
+    });
+  }
+
+  // Drafts move one way. A phone hands them to the laptop, and the laptop's file tells the phone what became
+  // of each: still waiting, posted under a number, or sent back to be corrected.
+  // The same draft is recognised by its unchanged updatedAt, so the two clocks are never compared.
+  static mergeDrafts(data, file, role, summary) {
+    const mine = DraftRepository.list(data);
+    const theirs = file.drafts || [];
+    if (role === 'laptop' && file.role === 'phone') {
+      const posted = new Set(data.invoices.map((invoice) => invoice.draftUid));
+      const returned = data.returnedDrafts || [];
+      for (const draft of theirs) {
+        if (posted.has(draft.uid)) continue;
+        if (returned.some((entry) => entry.uid === draft.uid && entry.updatedAt === draft.updatedAt)) continue;
+        const index = mine.findIndex((existing) => existing.uid === draft.uid);
+        if (index !== -1 && mine[index].updatedAt === draft.updatedAt) continue;
+        if (index === -1) {
+          mine.push({ ...draft, state: 'sent' });
+          summary.draftsNew += 1;
+        } else {
+          mine[index] = { ...draft, state: 'sent' };
+          summary.draftsUpdated += 1;
+        }
+        summary.draftTotal += draft.totals.total;
+      }
+      data.drafts = mine;
+      data.returnedDrafts = returned.filter((entry) => !mine.some((draft) => draft.uid === entry.uid));
+    }
+    if (role === 'phone' && file.role === 'laptop') {
+      const postedAs = new Map(file.invoices.filter((invoice) => invoice.draftUid).map((invoice) => [invoice.draftUid, invoice.number]));
+      const waiting = new Map(theirs.map((draft) => [draft.uid, draft.updatedAt]));
+      const returned = new Map((file.returnedDrafts || []).map((entry) => [entry.uid, entry.updatedAt]));
+      data.drafts = mine.flatMap((draft) => {
+        const number = postedAs.get(draft.uid);
+        if (number) {
+          summary.posted.push(number);
+          // Changed on the phone after the laptop had posted it: the changes are kept as a draft of their own.
+          return draft.state === 'sent' ? [] : [{ ...draft, uid: DraftRepository.uid(), postedAs: number }];
+        }
+        if (waiting.get(draft.uid) === draft.updatedAt) return [{ ...draft, state: 'sent' }];
+        if (draft.state === 'sent' && returned.get(draft.uid) === draft.updatedAt) {
+          summary.returned += 1;
+          return [{ ...draft, state: 'draft', returned: true }];
+        }
+        return [draft];
+      });
+    }
+  }
+
+  // The same invoice is known by when it was created and its date; its latest history entry says which copy is newer.
+  // A different invoice that happens to share a number is a conflict and is never overwritten.
+  static syncChoice(existing, incoming) {
+    if (TransferService.sameInvoice(existing, incoming)) return 'kept';
+    if (!existing.createdAt || existing.createdAt !== incoming.createdAt || existing.date !== incoming.date) return 'conflict';
+    const lastChange = (invoice) => (invoice.history && invoice.history.length ? invoice.history[invoice.history.length - 1].at : invoice.createdAt);
+    return lastChange(incoming) > lastChange(existing) ? 'updated' : 'kept';
+  }
+
+  // Works on the data it is given, so the preview and the real merge can never disagree.
+  static mergeSync(data, file, role = Device.role()) {
+    const summary = { fresh: 0, updated: 0, kept: 0, conflicts: [], newItems: 0, config: false,
+      draftsNew: 0, draftsUpdated: 0, draftTotal: 0, posted: [], returned: 0 };
+    const byNumber = new Map(data.invoices.map((invoice, index) => [invoice.number, index]));
+    for (const invoice of file.invoices) {
+      const index = byNumber.get(invoice.number);
+      if (index === undefined) {
+        data.invoices.push({ ...invoice, id: data.nextInvoiceId });
+        data.nextInvoiceId += 1;
+        summary.fresh += 1;
+        continue;
+      }
+      const choice = TransferService.syncChoice(data.invoices[index], invoice);
+      if (choice === 'conflict') {
+        summary.conflicts.push(invoice.number);
+      } else if (choice === 'updated') {
+        data.invoices[index] = { ...invoice, id: data.invoices[index].id };
+        summary.updated += 1;
+      } else {
+        summary.kept += 1;
+      }
+    }
+    // Items already on this device keep their price; only items it has never seen are added.
+    for (const item of file.items) {
+      if (TransferService.matchItem(data.items, item)) continue;
+      ItemRepository.put(data, { ...item, id: undefined });
+      summary.newItems += 1;
+    }
+    // Settings are copied only to a device that has none yet, so a new phone is ready but nothing is overwritten.
+    const config = ConfigRepository.merge(data.config);
+    if (!config.store.name.trim() && String(file.config.store.name || '').trim()) {
+      Object.assign(config, ConfigRepository.merge(file.config));
+      summary.config = true;
+    }
+    if (file.sequence) {
+      config.invoiceNumber.next = Math.max(config.invoiceNumber.next, file.sequence.invoice || 1);
+      config.sjNumber.next = Math.max(config.sjNumber.next, file.sequence.sj || 1);
+    }
+    data.config = config;
+    TransferService.mergeDrafts(data, file, role, summary);
+    return summary;
+  }
+
+  previewSync(file, role) {
+    return TransferService.mergeSync(this.store.read((data) => data), file, role);
+  }
+
+  applySync(file, role) {
+    return this.store.update((data) => TransferService.mergeSync(data, file, role));
   }
 
   // Invoices are never overwritten: an existing number with different content is skipped and reported.
@@ -4026,6 +4886,212 @@ class TransferService {
       config.sjNumber.next = Math.max(config.sjNumber.next, current.sjNumber.next);
       data.config = config;
     });
+  }
+}
+
+</script>
+  <script>
+// Invoices a phone has written that the laptop has not numbered yet.
+// They live apart from the invoices, so no report, reminder, total or number ever counts them.
+class DraftRepository {
+  constructor(store) {
+    this.store = store;
+  }
+
+  static list(data) {
+    return data.drafts || [];
+  }
+
+  static uid() {
+    return [...crypto.getRandomValues(new Uint8Array(12))].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  async all() {
+    return this.store.read((data) => DraftRepository.list(data)).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  async get(uid) {
+    return this.store.read((data) => DraftRepository.list(data).find((draft) => draft.uid === uid));
+  }
+
+  // fields are the checked form fields. The totals are kept so a list can show the amount.
+  save(uid, fields) {
+    return this.store.update((data) => {
+      const drafts = DraftRepository.list(data);
+      const now = new Date().toISOString();
+      const existing = drafts.find((draft) => draft.uid === uid);
+      const draft = existing || { uid: DraftRepository.uid(), createdAt: now };
+      Object.assign(draft, { updatedAt: now, state: 'draft', fields, totals: InvoiceCalculator.totals(fields) });
+      delete draft.returned;
+      delete draft.postedAs;
+      if (!existing) drafts.push(draft);
+      data.drafts = drafts;
+      return draft;
+    });
+  }
+
+  remove(uid) {
+    return this.store.update((data) => {
+      data.drafts = DraftRepository.list(data).filter((draft) => draft.uid !== uid);
+    });
+  }
+
+  // On the phone: a draft already handed to the laptop is opened for changes again.
+  reopen(uid) {
+    return this.store.update((data) => {
+      const draft = DraftRepository.list(data).find((candidate) => candidate.uid === uid);
+      if (draft) draft.state = 'draft';
+    });
+  }
+
+  // On the phone, once the laptop has confirmed it holds these drafts.
+  markSent(uids) {
+    return this.store.update((data) => {
+      for (const draft of DraftRepository.list(data)) if (uids.includes(draft.uid)) draft.state = 'sent';
+    });
+  }
+
+  // On the laptop: the draft goes back to the phone to be corrected. The phone learns of it at the next sync,
+  // and the same unchanged draft is not taken in again.
+  giveBack(uid) {
+    return this.store.update((data) => {
+      const draft = DraftRepository.list(data).find((candidate) => candidate.uid === uid);
+      if (!draft) return;
+      data.drafts = DraftRepository.list(data).filter((candidate) => candidate !== draft);
+      data.returnedDrafts = [...(data.returnedDrafts || []).filter((entry) => entry.uid !== uid), { uid, updatedAt: draft.updatedAt }];
+    });
+  }
+}
+
+</script>
+  <script>
+// Generated by Apps Package/build.py from sync/MoyenSync.ps1. Do not edit by hand.
+window.MOYEN_SYNC_SOURCE = "<# : batch portion\n@echo off\ntitle Moyen Sync\nset \"MOYEN_SELF=%~f0\"\npowershell -NoProfile -ExecutionPolicy Bypass -Command \"& ([scriptblock]::Create((Get-Content -LiteralPath $env:MOYEN_SELF -Raw -Encoding UTF8))) -Install %MOYEN_ARGS%\"\nif errorlevel 1 pause\nexit /b\n#>\n# Moyen Sync: a small Wi-Fi bridge so a phone on the same network can sync with ProjectYearEnd on this laptop.\n# It needs no admin rights and runs on Windows PowerShell 5.1.\n#\n# This one file is both a .cmd and a .ps1. Opened as a .cmd (a double click, or the installer the app hands out),\n# it installs itself: it copies itself to the user's own app folder and registers the moyensync: link, so from then\n# on the app starts it with one click. Run as a .ps1 it only listens.\n#\n# The laptop app (on this computer only) hands over its data and shows a one-time address as a QR code.\n# The phone scans it, takes that data, and hands back its own. A session lasts 60 seconds until the phone opens\n# it, then 10 minutes to finish, and each direction works once. Nothing is written to disk.\nparam(\n  [int]$Port = 8737,\n  # For tests: listen on this computer only, so Windows never asks for firewall access.\n  [switch]$LocalOnly,\n  [switch]$Install,\n  [switch]$Uninstall,\n  # Stops by itself after this long without a request, so it is not left listening. 0 keeps it running.\n  [int]$IdleMinutes = 30,\n  # For tests: where the link is registered and where the script is copied to.\n  [string]$RegistryRoot = 'HKCU:\\Software\\Classes',\n  [string]$InstallFolder = (Join-Path $env:LOCALAPPDATA 'ProjectYearEnd')\n)\n$ErrorActionPreference = 'Stop'\n$ScanSeconds = 60\n$TransferSeconds = 600\n$MaxBodyBytes = 50MB\n$MaxHeadBytes = 32KB\n$AllowedOrigins = @('null', 'https://projectmoyen.github.io')\n# The phone's copy of the app. The laptop app may name another one, checked against these shapes.\n$DefaultApp = 'https://projectmoyen.github.io/app/'\n$AppPattern = '^(https://[A-Za-z0-9.-]+(:\\d+)?|http://(127\\.0\\.0\\.1|localhost)(:\\d+)?)/[A-Za-z0-9._~/-]*$'\n$script:Session = $null\n$script:LastActivity = [DateTime]::UtcNow\n$Utf8 = New-Object System.Text.UTF8Encoding $false\n$InstalledScript = Join-Path $InstallFolder 'MoyenSync.ps1'\n$LinkKey = Join-Path $RegistryRoot 'moyensync'\n\n# Copies this file to the user's app folder and registers moyensync: for this user only.\n# The registered command is fixed text: nothing from a link is ever passed to it.\nfunction Install-Launcher {\n  $source = if ($env:MOYEN_SELF) { $env:MOYEN_SELF } else { $PSCommandPath }\n  if (-not $source) { return }\n  New-Item -ItemType Directory -Force -Path $InstallFolder | Out-Null\n  if ([System.IO.Path]::GetFullPath($source) -ne [System.IO.Path]::GetFullPath($InstalledScript)) {\n    Copy-Item -LiteralPath $source -Destination $InstalledScript -Force\n  }\n  Unblock-File -LiteralPath $InstalledScript -ErrorAction SilentlyContinue\n  $shell = Join-Path $env:SystemRoot 'System32\\WindowsPowerShell\\v1.0\\powershell.exe'\n  New-Item -Path \"$LinkKey\\shell\\open\\command\" -Force | Out-Null\n  Set-ItemProperty -Path $LinkKey -Name '(default)' -Value 'URL:Moyen Sync'\n  Set-ItemProperty -Path $LinkKey -Name 'URL Protocol' -Value ''\n  Set-ItemProperty -Path \"$LinkKey\\shell\\open\\command\" -Name '(default)' -Value ('\"{0}\" -NoProfile -ExecutionPolicy Bypass -WindowStyle Minimized -File \"{1}\"' -f $shell, $InstalledScript)\n  Write-Host '  Moyen Sync terpasang. Lain kali cukup tekan Nyalakan Moyen Sync di aplikasi.' -ForegroundColor Green\n}\n\nfunction Uninstall-Launcher {\n  if (Test-Path $LinkKey) { Remove-Item -Path $LinkKey -Recurse -Force }\n  if (Test-Path -LiteralPath $InstalledScript) { Remove-Item -LiteralPath $InstalledScript -Force }\n  Write-Host '  Moyen Sync sudah dicopot dari komputer ini.'\n}\n\nfunction New-RandomText([int]$Bytes) {\n  $buffer = New-Object byte[] $Bytes\n  $random = [System.Security.Cryptography.RandomNumberGenerator]::Create()\n  $random.GetBytes($buffer)\n  $random.Dispose()\n  [Convert]::ToBase64String($buffer).TrimEnd('=').Replace('+', '-').Replace('/', '_')\n}\n\n# Wi-Fi and Ethernet addresses the phone can reach, best first: the Windows hotspot, then adapters with a gateway.\nfunction Get-LanAddresses {\n  $found = @()\n  foreach ($nic in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {\n    if ($nic.OperationalStatus -ne 'Up') { continue }\n    if (\"$($nic.NetworkInterfaceType)\" -in @('Loopback', 'Tunnel')) { continue }\n    $properties = $nic.GetIPProperties()\n    $hasGateway = @($properties.GatewayAddresses | Where-Object {\n      $_.Address.AddressFamily -eq 'InterNetwork' -and -not $_.Address.Equals([System.Net.IPAddress]::Any)\n    }).Count -gt 0\n    $isVirtual = \"$($nic.Description) $($nic.Name)\" -match 'Virtual|VMware|VirtualBox|Hyper-V|vEthernet|WSL|Bluetooth'\n    foreach ($unicast in $properties.UnicastAddresses) {\n      if ($unicast.Address.AddressFamily -ne 'InterNetwork') { continue }\n      $ip = $unicast.Address.ToString()\n      if ($ip.StartsWith('169.254.') -or $ip.StartsWith('127.')) { continue }\n      $rank = if ($ip -eq '192.168.137.1') { 0 } elseif ($isVirtual) { 3 } elseif ($hasGateway) { 1 } else { 2 }\n      $found += [pscustomobject]@{ Address = $ip; Name = $nic.Name; Rank = $rank }\n    }\n  }\n  @($found | Sort-Object Rank, Address)\n}\n\nfunction Get-StatusText([int]$Code) {\n  switch ($Code) {\n    200 { 'OK' } 204 { 'No Content' } 400 { 'Bad Request' } 403 { 'Forbidden' } 404 { 'Not Found' }\n    405 { 'Method Not Allowed' } 409 { 'Conflict' } 410 { 'Gone' } 411 { 'Length Required' }\n    413 { 'Payload Too Large' } default { 'Internal Server Error' }\n  }\n}\n\nfunction Send-Response($Stream, [int]$Code, [string]$Type, [byte[]]$Body, [hashtable]$Headers) {\n  if ($null -eq $Body) { $Body = New-Object byte[] 0 }\n  $lines = New-Object System.Text.StringBuilder\n  [void]$lines.Append(\"HTTP/1.1 $Code $(Get-StatusText $Code)`r`n\")\n  if ($Type) { [void]$lines.Append(\"Content-Type: $Type`r`n\") }\n  [void]$lines.Append(\"Content-Length: $($Body.Length)`r`nConnection: close`r`nCache-Control: no-store`r`n\")\n  [void]$lines.Append(\"X-Content-Type-Options: nosniff`r`nReferrer-Policy: no-referrer`r`n\")\n  if ($Headers) { foreach ($key in $Headers.Keys) { [void]$lines.Append(\"${key}: $($Headers[$key])`r`n\") } }\n  [void]$lines.Append(\"`r`n\")\n  $head = [System.Text.Encoding]::ASCII.GetBytes($lines.ToString())\n  $Stream.Write($head, 0, $head.Length)\n  if ($Body.Length) { $Stream.Write($Body, 0, $Body.Length) }\n  $Stream.Flush()\n}\n\nfunction Send-Json($Stream, [int]$Code, $Value, [hashtable]$Headers) {\n  Send-Response $Stream $Code 'application/json; charset=utf-8' $Utf8.GetBytes((ConvertTo-Json $Value -Compress -Depth 4)) $Headers\n}\n\nfunction Send-Page($Stream, [int]$Code, [string]$Html, [string]$AppOrigin) {\n  Send-Response $Stream $Code 'text/html; charset=utf-8' $Utf8.GetBytes($Html) @{\n    'Content-Security-Policy' = \"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self' $AppOrigin; img-src data:\"\n  }\n}\n\n# Reads one HTTP/1.1 request. The head is capped at 32 KB and the body at 50 MB; anything else is refused.\nfunction Read-Request($Stream) {\n  $buffer = New-Object byte[] 65536\n  $head = New-Object System.IO.MemoryStream\n  $ascii = [System.Text.Encoding]::ASCII\n  $end = -1\n  while ($end -lt 0) {\n    $read = $Stream.Read($buffer, 0, $buffer.Length)\n    if ($read -le 0) { return $null }\n    $head.Write($buffer, 0, $read)\n    # ASCII decoding keeps one character per byte, so the index is also the byte offset.\n    $end = $ascii.GetString($head.GetBuffer(), 0, [int]$head.Length).IndexOf(\"`r`n`r`n\")\n    if ($end -lt 0 -and $head.Length -gt $MaxHeadBytes) { return $null }\n  }\n  $raw = $head.ToArray()\n  $lines = $ascii.GetString($raw, 0, $end).Split(@(\"`r`n\"), [StringSplitOptions]::None)\n  $first = $lines[0].Split(' ')\n  if ($first.Count -lt 3) { return $null }\n  $headers = @{}\n  foreach ($line in ($lines | Select-Object -Skip 1)) {\n    $colon = $line.IndexOf(':')\n    if ($colon -gt 0) { $headers[$line.Substring(0, $colon).Trim()] = $line.Substring($colon + 1).Trim() }\n  }\n  $target = $first[1]\n  $question = $target.IndexOf('?')\n  $path = if ($question -ge 0) { $target.Substring(0, $question) } else { $target }\n  $query = @{}\n  if ($question -ge 0) {\n    foreach ($pair in $target.Substring($question + 1).Split('&')) {\n      $parts = $pair.Split('=', 2)\n      if ($parts[0]) { $query[[Uri]::UnescapeDataString($parts[0])] = if ($parts.Count -gt 1) { [Uri]::UnescapeDataString($parts[1].Replace('+', ' ')) } else { '' } }\n    }\n  }\n  $request = @{ Method = $first[0].ToUpperInvariant(); Path = $path; Query = $query; Headers = $headers; Body = (New-Object byte[] 0) }\n  if ($headers['Transfer-Encoding']) { $request.NoLength = $true; return $request }\n  $length = 0L\n  if ($headers['Content-Length'] -and -not [long]::TryParse($headers['Content-Length'], [ref]$length)) { return $null }\n  if ($length -gt $MaxBodyBytes) { $request.TooLarge = $true; return $request }\n  if ($length -gt 0) {\n    $length = [int]$length\n    $body = New-Object byte[] $length\n    $have = [int][Math]::Min($raw.Length - $end - 4, $length)\n    [Array]::Copy($raw, [int]($end + 4), $body, [int]0, $have)\n    while ($have -lt $length) {\n      $read = $Stream.Read($body, $have, [int][Math]::Min($length - $have, 1MB))\n      if ($read -le 0) { return $null }\n      $have += $read\n    }\n    $request.Body = $body\n  }\n  $request\n}\n\n# Only the app on this computer may use /api: file:// pages send Origin \"null\", the hosted site its own origin,\n# and a local preview http://127.0.0.1 or localhost on any port.\nfunction Get-CorsHeaders($Request) {\n  $origin = $Request.Headers['Origin']\n  $allowed = (-not $origin) -or ($AllowedOrigins -contains $origin) -or ($origin -match '^http://(127\\.0\\.0\\.1|localhost)(:\\d+)?$')\n  $headers = @{}\n  if ($origin -and $allowed) {\n    $headers['Access-Control-Allow-Origin'] = $origin\n    $headers['Vary'] = 'Origin'\n    $headers['Access-Control-Allow-Methods'] = 'GET, POST, DELETE, OPTIONS'\n    $headers['Access-Control-Allow-Headers'] = 'Content-Type'\n    $headers['Access-Control-Allow-Private-Network'] = 'true'\n    $headers['Access-Control-Max-Age'] = '600'\n  }\n  @{ Allowed = $allowed; Headers = $headers }\n}\n\n# A session nobody finished in time is ended, and its data dropped from memory.\nfunction Update-Expiry {\n  $session = $script:Session\n  if ($session -and $session.State -in @('waiting', 'opened') -and [DateTime]::UtcNow -gt $session.Expires) {\n    $session.State = 'expired'\n    $session.Data = $null\n    Write-Host '  QR sudah tidak berlaku (waktu habis).'\n  }\n}\n\nfunction Get-SessionByToken([string]$Token) {\n  $session = $script:Session\n  if ($session -and $Token -and $session.Token -ceq $Token) { return $session }\n  $null\n}\n\nfunction Get-SessionJson($Session) {\n  $left = [int][Math]::Max(0, [Math]::Ceiling(($Session.Expires - [DateTime]::UtcNow).TotalSeconds))\n  if ($Session.State -notin @('waiting', 'opened')) { $left = 0 }\n  @{ sid = $Session.Sid; token = $Session.Token; state = $Session.State; secondsLeft = $left; taken = [bool]$Session.Taken }\n}\n\nfunction Invoke-Api($Stream, $Request, [hashtable]$Cors) {\n  $path = $Request.Path\n  $method = $Request.Method\n  if ($path -eq '/api/hello' -and $method -eq 'GET') {\n    $addresses = @(Get-LanAddresses | ForEach-Object { @{ address = $_.Address; name = $_.Name } })\n    Send-Json $Stream 200 @{ app = 'moyen-sync'; version = 2; port = $Port; addresses = $addresses } $Cors\n    return\n  }\n  if ($path -eq '/api/sessions' -and $method -eq 'POST') {\n    if ($Request.Body.Length -eq 0) { Send-Json $Stream 400 @{ error = 'empty' } $Cors; return }\n    $app = \"$($Request.Query['app'])\"\n    if (-not $app) { $app = $DefaultApp }\n    if ($app -notmatch $AppPattern) { Send-Json $Stream 400 @{ error = 'app' } $Cors; return }\n    $name = \"$($Request.Query['name'])\" -replace '[^A-Za-z0-9._-]', ''\n    if (-not $name.EndsWith('.json')) { $name = 'ProjectYearEnd-sinkron.json' }\n    # One session at a time: a new QR always replaces the old one.\n    $script:Session = @{\n      Sid = New-RandomText 12; Token = New-RandomText 16; State = 'waiting'; Name = $name; App = $app\n      Expires = [DateTime]::UtcNow.AddSeconds($ScanSeconds); Data = $Request.Body; Upload = $null; Taken = $false\n    }\n    Write-Host '* QR baru dibuat. Menunggu HP memindai.'\n    Send-Json $Stream 200 (Get-SessionJson $script:Session) $Cors\n    return\n  }\n  if ($path -match '^/api/sessions/([A-Za-z0-9_-]+)(/file)?$') {\n    $sid = $Matches[1]\n    $wantsFile = [bool]$Matches[2]\n    $session = $script:Session\n    if (-not $session -or $session.Sid -cne $sid) { Send-Json $Stream 404 @{ error = 'session' } $Cors; return }\n    if ($method -eq 'DELETE' -and -not $wantsFile) {\n      $script:Session = $null\n      Send-Response $Stream 204 $null $null $Cors\n      return\n    }\n    if ($method -ne 'GET') { Send-Json $Stream 405 @{ error = 'method' } $Cors; return }\n    if (-not $wantsFile) { Send-Json $Stream 200 (Get-SessionJson $session) $Cors; return }\n    if ($session.State -ne 'done' -or $null -eq $session.Upload) {\n      Send-Json $Stream 409 @{ error = 'not-ready' } $Cors\n      return\n    }\n    $data = $session.Upload\n    $script:Session = $null\n    Send-Response $Stream 200 'application/json; charset=utf-8' $data $Cors\n    return\n  }\n  Send-Json $Stream 404 @{ error = 'route' } $Cors\n}\n\n$PageStyle = @'\n:root{color-scheme:light;--primary:#1f8478;--primary-strong:#176a60;--soft:#eef6f5;--text:#1f2d3d;--muted:#4a5764;--line:#dfe6ea;--control:#7f8c98;--page:#eef2f4;--surface:#fff;--danger:#b3261e}\n@media (prefers-color-scheme:dark){:root{color-scheme:dark;--primary-strong:#63d3c4;--soft:#17312f;--text:#dbe4ec;--muted:#9aa9b8;--line:#2c3b49;--control:#5f7081;--page:#0f1820;--surface:#16212c;--danger:#f2b8b5}}\n*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;min-height:100vh;background:var(--page);color:var(--text);font:16px/1.5 \"Segoe UI\",\"Noto Sans\",Arial,sans-serif;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px}\nmain{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}\n.brand{color:var(--primary-strong);font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;margin:0 0 8px}\nh1{font-size:22px;line-height:1.3;margin:0 0 8px}p{margin:0 0 16px;color:var(--muted)}ol{margin:0 0 16px;padding-left:22px;color:var(--muted)}li{margin-bottom:4px}\n.button{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;border:1px solid var(--primary);border-radius:12px;background:var(--primary);color:#fff;font-family:inherit;font-size:17px;font-weight:600;line-height:1.2;cursor:pointer;padding:0 16px}\n.button.quiet{background:var(--surface);border-color:var(--control);color:var(--text);margin-bottom:12px}\n.button:focus-visible,summary:focus-visible{outline:3px solid var(--primary-strong);outline-offset:3px}.button[aria-disabled=true]{opacity:.6;pointer-events:none}\ninput[type=file]{position:absolute;width:1px;height:1px;opacity:0}\n.status{margin:16px 0 0;padding:12px 16px;border-radius:12px;background:var(--soft);color:var(--text)}.status:empty{display:none}.status.error{color:var(--danger)}\ndetails{border-top:1px solid var(--line);margin-top:24px;padding-top:8px}summary{color:var(--muted);cursor:pointer;font-weight:600;min-height:44px;line-height:44px}\n'@\n\nfunction Get-Page([string]$Title, [string]$Content) {\n  @'\n<!doctype html><html lang=\"id\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta name=\"robots\" content=\"noindex\">\n<title>{{TITLE}} - Moyen Sync</title><style>{{STYLE}}</style></head><body><main><p class=\"brand\">ProjectYearEnd &middot; Sinkronisasi</p>{{CONTENT}}</main><script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js');</script>
+</body></html>\n'@.Replace('{{TITLE}}', $Title).Replace('{{STYLE}}', $PageStyle).Replace('{{CONTENT}}', $Content)\n}\n\nfunction Get-EndedPage {\n  Get-Page 'QR tidak berlaku' '<h1>QR ini sudah tidak berlaku</h1><p>QR hanya bisa dipakai sekali dan berlaku sebentar. Di laptop, tekan <b>Buat QR baru</b>, lalu pindai lagi.</p>'\n}\n\n# The page the phone lands on. It hands the laptop's data to the phone's own copy of the app, and later takes that\n# app's answer back to the laptop. The data rides in the address of the page, packed small, because that works in\n# every browser and camera app: no second window, and no file to save. Data too large for an address falls back\n# to the file steps on the same page.\nfunction Get-BridgePage($Session) {\n  $content = @'\n<h1>Sinkronisasi dengan laptop</h1>\n<p id=\"lead\">Sebentar, ProjectYearEnd sedang dibuka. Ringkasan tampil dulu, dan belum ada data yang berubah sebelum Anda setuju.</p>\n<p class=\"status\" id=\"status\" role=\"status\" aria-live=\"polite\"></p>\n<a class=\"button\" id=\"back\" href=\"#\" hidden>Kembali ke ProjectYearEnd</a>\n<details id=\"more\">\n<summary>Tidak berhasil? Pakai cara file</summary>\n<ol><li>Tekan <b>Simpan data laptop ke HP</b>.</li><li>Buka ProjectYearEnd di HP, tekan tombol sinkron, buka <b>Cara lain: lewat file</b>, lalu <b>Masukkan file sinkron</b>.</li><li>Di tempat yang sama tekan <b>Siapkan file sinkron</b>, kembali ke halaman ini, lalu <b>Pilih file untuk laptop</b>.</li></ol>\n<button class=\"button quiet\" id=\"save\" type=\"button\">Simpan data laptop ke HP</button>\n<label class=\"button quiet\" id=\"pick\" for=\"file\">Pilih file untuk laptop</label><input id=\"file\" type=\"file\" accept=\".json,application/json\">\n</details>\n<script>\n(function(){\n  var APP='{{APP}}',TOKEN='{{TOKEN}}',LIMIT=1000000,laptopText=null;\n  var status=document.getElementById('status'),lead=document.getElementById('lead'),back=document.getElementById('back'),more=document.getElementById('more');\n  var save=document.getElementById('save'),pick=document.getElementById('pick'),input=document.getElementById('file');\n  var GONE='QR ini sudah dipakai atau waktunya habis. Buat QR baru di laptop.',LOST='Laptop tidak menjawab. Pastikan HP dan laptop di Wi-Fi yang sama.';\n  function say(text,isError){status.textContent=text;status.className=isError?'status error':'status';}\n  function take(){return fetch('/d/'+TOKEN,{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error(response.status===410?GONE:LOST);return response.text();},function(){throw new Error(LOST);});}\n  function give(text){return fetch('/u/'+TOKEN,{method:'POST',headers:{'Content-Type':'application/json'},body:text}).then(function(response){if(!response.ok)throw new Error(response.status===410?GONE:response.status===413?'File terlalu besar.':LOST);},function(){throw new Error(LOST);});}\n  function toText(bytes){var binary='';for(var i=0;i<bytes.length;i+=32768)binary+=String.fromCharCode.apply(null,bytes.subarray(i,i+32768));return btoa(binary).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'');}\n  function toBytes(text){var binary=atob(text.replace(/-/g,'+').replace(/_/g,'/')),bytes=new Uint8Array(binary.length);for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return bytes;}\n  function pipe(bytes,stream){return new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer().then(function(buffer){return new Uint8Array(buffer);});}\n  function pack(text){var bytes=new TextEncoder().encode(text);if(!window.CompressionStream)return Promise.resolve('p'+toText(bytes));return pipe(bytes,new CompressionStream('gzip')).then(function(zipped){return 'z'+toText(zipped);});}\n  function unpack(payload){var bytes=toBytes(payload.slice(1));if(payload.charAt(0)!=='z')return Promise.resolve(new TextDecoder().decode(bytes));return pipe(bytes,new DecompressionStream('gzip')).then(function(plain){return new TextDecoder().decode(plain);});}\n  function useFiles(text){lead.hidden=true;more.open=true;say(text,true);}\n  function current(){return fetch(APP.slice(-1)==='/'?APP+'index.html':APP,{cache:'no-store'}).then(function(response){return response.text();}).then(function(page){return page.indexOf('sinkron-ok')>=0;},function(){return true;});}\n  function start(){\n    say('Memeriksa ProjectYearEnd di HP...');\n    current().then(function(ready){\n      if(!ready)throw new Error('ProjectYearEnd di '+APP+' masih versi lama dan belum mengenal sinkronisasi ini. Perbarui situsnya dulu, lalu pindai lagi. Data laptop belum diambil.');\n      say('Mengambil data dari laptop...');\n      return take();\n    }).then(function(text){laptopText=text;return pack(text);}).then(function(payload){\n      if(payload.length>LIMIT){useFiles('Datanya terlalu besar untuk cara cepat. Ikuti cara file di bawah.');return;}\n      say('Membuka ProjectYearEnd...');\n      location.href=APP+'#/sinkron/'+toText(new TextEncoder().encode(location.origin+location.pathname))+'/'+payload;\n    }).catch(function(error){useFiles(error.message);});\n  }\n  function finish(rest){\n    var dot=rest.indexOf('.'),nonce=rest.slice(0,dot);\n    lead.hidden=true;\n    if(dot<1||!/^[A-Za-z0-9]+$/.test(nonce)){useFiles('Kiriman dari HP tidak terbaca. Ikuti cara file di bawah.');return;}\n    say('Mengirim ke laptop...');\n    unpack(rest.slice(dot+1)).then(give).then(function(){\n      say('Kiriman sudah sampai di laptop. Kembali ke ProjectYearEnd...');\n      location.href=APP+'#/sinkron-ok/'+nonce;\n    }).catch(function(error){\n      say(error.message,true);back.href=APP+'#/sinkron-gagal/'+nonce;back.hidden=false;\n    });\n  }\n  save.addEventListener('click',function(){\n    say('Mengambil data dari laptop...');\n    (laptopText===null?take():Promise.resolve(laptopText)).then(function(text){\n      laptopText=text;\n      var link=document.createElement('a');link.href=URL.createObjectURL(new Blob([text],{type:'application/json'}));link.download='{{NAME}}';\n      document.body.appendChild(link);link.click();link.remove();\n      setTimeout(function(){URL.revokeObjectURL(link.href);},60000);\n      say('File tersimpan di folder Download HP. Lanjut ke langkah 2.');\n    }).catch(function(error){say(error.message,true);});\n  });\n  input.addEventListener('change',function(){\n    var file=input.files[0];input.value='';if(!file)return;\n    file.text().then(function(text){\n      var data;try{data=JSON.parse(text);}catch(e){data=null;}\n      if(!data||data.app!=='yearendproject'||data.kind!=='sync')throw new Error('Ini bukan file sinkron ProjectYearEnd. Pilih file ProjectYearEnd-sinkron.');\n      pick.setAttribute('aria-disabled','true');say('Mengirim ke laptop...');\n      return give(text);\n    }).then(function(){pick.hidden=true;say('Terkirim. Lihat layar laptop.');})\n      .catch(function(error){pick.removeAttribute('aria-disabled');say(error.message,true);});\n  });\n  var hash=location.hash;\n  if(hash.indexOf('#push=')===0){history.replaceState(null,'',location.pathname);finish(hash.slice(6));}\n  else start();\n})();\n<\/script>\n'@.Replace('{{TOKEN}}', $Session.Token).Replace('{{NAME}}', $Session.Name).Replace('{{APP}}', $Session.App)\n  Get-Page 'Sinkronisasi' $content\n}\n\n# Routes the phone uses. The token in the address is the only key, and each direction works once.\nfunction Invoke-Phone($Stream, $Request) {\n  if ($Request.Path -notmatch '^/([sdu])/([A-Za-z0-9_-]+)$') {\n    Send-Page $Stream 404 (Get-Page 'Tidak ditemukan' '<h1>Halaman tidak ditemukan</h1><p>Pindai QR yang tampil di laptop.</p>')\n    return\n  }\n  $step = $Matches[1]\n  $session = Get-SessionByToken $Matches[2]\n  if ($step -eq 's' -and $Request.Method -eq 'GET') {\n    if (-not $session -or $session.State -notin @('waiting', 'opened')) { Send-Page $Stream 410 (Get-EndedPage); return }\n    if ($session.State -eq 'waiting') {\n      $session.State = 'opened'\n      $session.Expires = [DateTime]::UtcNow.AddSeconds($TransferSeconds)\n      Write-Host '  HP sudah memindai QR.'\n    }\n    Send-Page $Stream 200 (Get-BridgePage $session) ([Uri]$session.App).GetLeftPart([System.UriPartial]::Authority)\n    return\n  }\n  if ($step -eq 'd' -and $Request.Method -eq 'GET') {\n    if (-not $session -or $session.State -ne 'opened' -or $null -eq $session.Data) { Send-Json $Stream 410 @{ error = 'gone' } $null; return }\n    # The data stays until the phone has answered or the time runs out, so a reload or a second scan still works.\n    $data = $session.Data\n    $session.Taken = $true\n    Send-Response $Stream 200 'application/json; charset=utf-8' $data @{ 'Content-Disposition' = \"attachment; filename=\"\"$($session.Name)\"\"\" }\n    Write-Host '  Data laptop sudah diambil HP.'\n    return\n  }\n  if ($step -eq 'u' -and $Request.Method -eq 'POST') {\n    if (-not $session -or $session.State -ne 'opened') { Send-Json $Stream 410 @{ error = 'gone' } $null; return }\n    if ($Request.Body.Length -eq 0) { Send-Json $Stream 400 @{ error = 'empty' } $null; return }\n    $session.Upload = $Request.Body\n    $session.Data = $null\n    $session.State = 'done'\n    Send-Json $Stream 200 @{ ok = $true } $null\n    Write-Host '  Selesai: kiriman dari HP diterima. Periksa di layar laptop.'\n    return\n  }\n  Send-Json $Stream 405 @{ error = 'method' } $null\n}\n\nfunction Invoke-Client($Client) {\n  $Client.ReceiveTimeout = 30000\n  $Client.SendTimeout = 30000\n  $stream = $Client.GetStream()\n  $request = Read-Request $stream\n  if (-not $request) { return }\n  $script:LastActivity = [DateTime]::UtcNow\n  if ($request.Path.StartsWith('/api/')) {\n    $remote = $Client.Client.RemoteEndPoint.Address\n    $cors = Get-CorsHeaders $request\n    # /api answers only this computer, and only under its own name, so another site cannot reach it by DNS tricks.\n    $hostName = \"$($request.Headers['Host'])\" -replace ':\\d+$', ''\n    if (-not [System.Net.IPAddress]::IsLoopback($remote) -or -not $cors.Allowed -or $hostName -notin @('127.0.0.1', 'localhost')) {\n      Send-Json $stream 403 @{ error = 'forbidden' } $null\n      return\n    }\n    if ($request.Method -eq 'OPTIONS') { Send-Response $stream 204 $null $null $cors.Headers; return }\n    if ($request.TooLarge) { Send-Json $stream 413 @{ error = 'too-large' } $cors.Headers; return }\n    if ($request.NoLength) { Send-Json $stream 411 @{ error = 'length' } $cors.Headers; return }\n    Invoke-Api $stream $request $cors.Headers\n    return\n  }\n  if ($request.TooLarge) { Send-Json $stream 413 @{ error = 'too-large' } $null; return }\n  if ($request.NoLength) { Send-Json $stream 411 @{ error = 'length' } $null; return }\n  Invoke-Phone $stream $request\n}\n\nif ($Uninstall) {\n  Uninstall-Launcher\n  exit 0\n}\nif ($Install) { Install-Launcher }\n\n$bindAddress = if ($LocalOnly) { [System.Net.IPAddress]::Loopback } else { [System.Net.IPAddress]::Any }\n$listener = New-Object System.Net.Sockets.TcpListener($bindAddress, $Port)\ntry {\n  $listener.Start()\n} catch {\n  Write-Host \"  Moyen Sync sudah menyala di jendela lain (port $Port sedang dipakai). Jendela ini boleh ditutup.\" -ForegroundColor Yellow\n  exit 1\n}\n\nWrite-Host ''\nWrite-Host '  Moyen Sync menyala.' -ForegroundColor Green\nWrite-Host '  Biarkan jendela ini terbuka selama sinkronisasi. Tutup jendela ini untuk berhenti.'\n$lan = @(Get-LanAddresses)\nif ($LocalOnly) {\n  Write-Host '  Mode uji: hanya komputer ini.'\n} elseif ($lan.Count) {\n  foreach ($entry in $lan) { Write-Host \"  Alamat untuk HP: http://$($entry.Address):$Port  ($($entry.Name))\" }\n  Write-Host '  Jika Windows bertanya soal firewall, pilih Izinkan untuk jaringan Pribadi.'\n} else {\n  Write-Host '  Laptop belum tersambung ke Wi-Fi atau hotspot. Sambungkan dulu, HP harus di jaringan yang sama.' -ForegroundColor Yellow\n}\nif ($IdleMinutes -gt 0) { Write-Host \"  Berhenti sendiri setelah $IdleMinutes menit tidak dipakai.\" }\nWrite-Host ''\n\n# Browsers open spare connections that may never send anything, so a request is read only once its first bytes\n# arrive; idle or closed connections are dropped without holding up the others.\n$pending = New-Object System.Collections.Generic.List[object]\ntry {\n  while ($true) {\n    while ($listener.Pending()) { $pending.Add(@{ Client = $listener.AcceptTcpClient(); Since = [DateTime]::UtcNow }) }\n    Update-Expiry\n    $served = $false\n    foreach ($entry in $pending.ToArray()) {\n      $client = $entry.Client\n      $ready = $false\n      $closed = $false\n      try {\n        $ready = $client.Available -gt 0\n        $closed = (-not $ready) -and $client.Client.Poll(0, [System.Net.Sockets.SelectMode]::SelectRead)\n      } catch { $closed = $true }\n      if ($ready) {\n        [void]$pending.Remove($entry)\n        $served = $true\n        try { Invoke-Client $client } catch { Write-Host \"  Permintaan gagal: $($_.Exception.Message)\" -ForegroundColor Yellow } finally { $client.Close() }\n      } elseif ($closed -or ([DateTime]::UtcNow - $entry.Since).TotalSeconds -gt 20) {\n        [void]$pending.Remove($entry)\n        $client.Close()\n      }\n    }\n    if ($IdleMinutes -gt 0 -and ([DateTime]::UtcNow - $script:LastActivity).TotalMinutes -ge $IdleMinutes) {\n      Write-Host '  Moyen Sync berhenti karena tidak dipakai. Nyalakan lagi dari aplikasi kapan saja.'\n      break\n    }\n    if (-not $served) { Start-Sleep -Milliseconds 25 }\n  }\n} finally {\n  $listener.Stop()\n}\n";
+
+</script>
+  <script>
+class SyncError extends Error {}
+
+// Talks to Moyen Sync (sync/MoyenSync.ps1), the small Wi-Fi helper that runs on the laptop.
+// Only this computer can reach its /api; the phone reaches it through the one-time address in the QR code.
+class SyncService {
+  static PORT = 8737;
+  static OFFLINE = 'Moyen Sync tidak menjawab. Pastikan jendela Moyen Sync di laptop masih terbuka, lalu coba lagi.';
+  // The link Moyen Sync registers when it is installed. Opening it starts the helper.
+  static LAUNCH_LINK = 'moyensync:start';
+  static INSTALLER_NAME = 'Pasang Moyen Sync.cmd';
+  // Where a phone finds the app when this laptop runs it from a file.
+  static HOSTED_APP = 'https://projectmoyen.github.io/app/';
+
+  constructor(base = `http://127.0.0.1:${SyncService.PORT}`) {
+    this.base = base;
+    // The phone opens the same copy of the app this laptop uses, so both share one address.
+    this.appUrl = /^https?:$/.test(location.protocol) ? location.origin + location.pathname : SyncService.HOSTED_APP;
+  }
+
+  static fileName() {
+    return `ProjectYearEnd-sinkron-${DateUtil.today()}.json`;
+  }
+
+  static phoneUrl(address, token) {
+    return `http://${address}:${SyncService.PORT}/s/${token}`;
+  }
+
+  // Between the phone's app and the Moyen Sync page, data travels inside a page address, packed small.
+  // Longer than this it no longer fits every browser, and the file steps are used instead.
+  static LINK_LIMIT = 1000000;
+
+  static toText(bytes) {
+    let binary = '';
+    for (let i = 0; i < bytes.length; i += 32768) binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768));
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  static toBytes(text) {
+    const binary = atob(text.replace(/-/g, '+').replace(/_/g, '/'));
+    return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  }
+
+  static async pipe(bytes, stream) {
+    return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer());
+  }
+
+  // The first letter says how it was packed: z for gzip, p for plain, where a browser cannot compress.
+  static async pack(text) {
+    const bytes = new TextEncoder().encode(text);
+    return window.CompressionStream
+      ? `z${SyncService.toText(await SyncService.pipe(bytes, new CompressionStream('gzip')))}`
+      : `p${SyncService.toText(bytes)}`;
+  }
+
+  static async unpack(payload) {
+    const bytes = SyncService.toBytes(payload.slice(1));
+    return new TextDecoder().decode(payload[0] === 'z' ? await SyncService.pipe(bytes, new DecompressionStream('gzip')) : bytes);
+  }
+
+  // Asks Windows to start the installed helper. A hidden frame is used so the page itself never navigates.
+  // Nothing happens when Moyen Sync is not installed, which the caller notices by the helper staying silent.
+  launch() {
+    const frame = h('iframe', { src: SyncService.LAUNCH_LINK, hidden: true, title: 'Moyen Sync' });
+    document.body.append(frame);
+    setTimeout(() => frame.remove(), 5000);
+  }
+
+  // The helper travels inside the app, so it can be installed without opening any folder.
+  installer() {
+    return new Blob([window.MOYEN_SYNC_SOURCE.replace(/\r?\n/g, '\r\n')], { type: 'application/octet-stream' });
+  }
+
+  async request(path, options = {}, timeoutMs = 10000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(this.base + path, { ...options, cache: 'no-store', signal: controller.signal });
+    } catch (error) {
+      throw new SyncError(SyncService.OFFLINE);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  // The helper's network addresses, or null when it is not running on this computer.
+  async hello() {
+    try {
+      const response = await this.request('/api/hello', {}, 1500);
+      const body = response.ok ? await response.json() : null;
+      return body && body.app === 'moyen-sync' && Array.isArray(body.addresses) ? body : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // One session works both ways: the laptop hands over its data, then waits for what the phone hands back.
+  async createSession(text) {
+    const query = `name=${encodeURIComponent(SyncService.fileName())}&app=${encodeURIComponent(this.appUrl)}`;
+    const response = await this.request(`/api/sessions?${query}`, { method: 'POST', body: text }, 30000);
+    if (response.status === 413) throw new SyncError('Data terlalu besar untuk sinkronisasi lewat Wi-Fi (lebih dari 50 MB). Gunakan Import & Export di Pengaturan Toko.');
+    if (!response.ok) throw new SyncError(SyncService.OFFLINE);
+    return response.json();
+  }
+
+  // A session the helper no longer knows has ended.
+  async status(sid) {
+    const response = await this.request(`/api/sessions/${sid}`);
+    if (response.status === 404) return { state: 'closed' };
+    if (!response.ok) throw new SyncError(SyncService.OFFLINE);
+    return response.json();
+  }
+
+  async file(sid) {
+    const response = await this.request(`/api/sessions/${sid}/file`, {}, 30000);
+    if (!response.ok) throw new SyncError('Kiriman dari HP tidak bisa diambil. Buat QR baru, lalu ulangi dari HP.');
+    return response.text();
+  }
+
+  // Best effort: the helper also drops a session by itself once it expires.
+  cancel(sid) {
+    return this.request(`/api/sessions/${sid}`, { method: 'DELETE' }, 3000).catch(() => {});
   }
 }
 
@@ -4708,6 +5774,9 @@ class HomeModule extends Module {
     const invoices = await this.app.invoices.all();
     const config = await this.app.config.get();
     const due = Reminder.due(invoices, DateUtil.today());
+    const drafts = await this.app.drafts.all();
+    const phone = Device.isPhone();
+    const unsent = drafts.filter((draft) => draft.state !== 'sent').length;
     const fileInput = h('input', {
       type: 'file',
       accept: 'application/pdf,.pdf',
@@ -4746,10 +5815,18 @@ class HomeModule extends Module {
     },
       h('div', { class: 'home-intro-text' },
         h('p', { class: 'eyebrow' }, 'Halaman Utama'),
-        h('p', { class: 'muted' }, 'Pilih file PO, atau isi invoice sendiri.')),
+        h('p', { class: 'muted' }, 'Pilih file PO, atau isi invoice sendiri.'),
+        this.pulse(invoices)),
       this.app.storage.mode === 'browser' && h('div', { class: 'notice notice-warning home-notice' },
-        'Data tersimpan di dalam browser ini dan bisa hilang saat data browser dihapus. Gunakan Edge atau Chrome. ',
+        phone
+          ? 'Data di HP ini tersimpan di dalam browser dan bisa hilang saat data browser dihapus. Sinkronkan ke laptop secara rutin. '
+          : 'Data tersimpan di dalam browser ini dan bisa hilang saat data browser dihapus. Gunakan Edge atau Chrome. ',
         h('a', { href: '#/config' }, 'Lihat detail')),
+      !phone && drafts.length > 0 && h('div', { class: 'notice notice-info home-notice' },
+        `${drafts.length} draf dari HP menunggu diposting. `,
+        h('a', { href: '#/invoices' }, 'Buka Kotak Draf')),
+      phone && unsent > 0 && h('div', { class: 'notice notice-info home-notice' },
+        `${unsent} draf belum dikirim ke laptop. Tekan tombol sinkron di sisi kanan layar.`),
       this.app.storage.recoveredFrom && h('div', { class: 'notice notice-warning home-notice', role: 'alert' },
         `Berkas data rusak dan sudah dipulihkan dari cadangan ${this.app.storage.recoveredFrom}. Periksa invoice terbaru.`),
       !config.store.name.trim() && h('div', { class: 'notice notice-info home-notice' },
@@ -4768,6 +5845,49 @@ class HomeModule extends Module {
         h('div', { class: 'home-side home-side-right' }, cards[2], cards[3])),
       footer));
     new MoyenVisit(cards, cards[3], footer);
+  }
+
+  static GREETED = 'yearendproject-greeted';
+
+  // One passing note per visit: the day so far, what is still owed, and that the data is backed up.
+  static greeting(invoices, backups, today) {
+    const day = Pulse.today(invoices, today);
+    const parts = [];
+    if (day.count > 0) parts.push(`Hari ini ${day.count} invoice, ${Format.rupiah(day.total)}.`);
+    if (day.owed > 0) parts.push(`Belum dibayar ${Format.rupiah(day.owed)}.`);
+    if (backups.length > 0) parts.push(`Data aman, cadangan terakhir ${Format.date(backups[0].date)}.`);
+    return parts.join(' ');
+  }
+
+  // Only a real problem stays on the page. The rest is said once and gets out of the way.
+  pulse(invoices) {
+    const alerts = h('div', { class: 'home-pulse' });
+    this.health(alerts, invoices);
+    return alerts;
+  }
+
+  async health(alerts, invoices) {
+    const { backend } = this.app.store;
+    const backups = backend.backups ? await backend.backups() : [];
+    const strays = backend.strays ? await backend.strays() : [];
+    const broken = invoices.filter((invoice) => !InvoiceCalculator.isConsistent(invoice));
+    if (broken.length > 0) {
+      alerts.append(h('div', { class: 'notice notice-error', role: 'alert' },
+        `Total ${broken.length} invoice tidak cocok dengan barisnya: ${broken.slice(0, 5).map((invoice) => invoice.number).join(', ')}. Jangan dikirim sebelum diperiksa.`));
+    }
+    if (strays.length > 0) {
+      alerts.append(h('div', { class: 'notice notice-warning' },
+        `Ada berkas data ganda di folder: ${strays.slice(0, 3).join(', ')}. Biasanya dibuat OneDrive saat dua komputer menyimpan bersamaan. Yang dipakai tetap ${FileBackend.DATA_FILE}. Jangan dihapus sebelum isinya dibandingkan.`));
+    }
+    const text = HomeModule.greeting(invoices, backups, DateUtil.today());
+    let greeted = true;
+    try {
+      greeted = Boolean(sessionStorage.getItem(HomeModule.GREETED));
+      sessionStorage.setItem(HomeModule.GREETED, '1');
+    } catch (error) {
+      // Without session storage the note is skipped, so it can never repeat on every visit to this page.
+    }
+    if (!greeted && text) Dialog.toast(text);
   }
 
   card(href, icon, title, description, badge) {
@@ -5358,16 +6478,26 @@ class CreateModule extends Module {
   async render(outlet, params) {
     this.config = await this.app.config.get();
     this.items = await this.app.items.all();
-    const id = params[0] ? Number(params[0]) : null;
+    const id = params[0] && params[0] !== 'draft' ? Number(params[0]) : null;
     this.original = Number.isInteger(id) ? await this.app.invoices.get(id) : null;
     this.invoices = await this.app.invoices.all();
     this.customers = InvoiceRepository.customers(this.invoices, this.config);
-    if (params[0] && (!this.original || this.original.voided)) {
+    // A phone only writes drafts; the laptop checks a draft and posts it under the next invoice number.
+    const phone = Device.isPhone();
+    this.draft = params[0] === 'draft' ? await this.app.drafts.get(params[1]) : null;
+    this.drafting = phone && !this.original;
+    this.posting = Boolean(this.draft) && !phone;
+    if (this.draft && phone && this.draft.state === 'sent') {
+      Dialog.toast('Draf ini sudah dikirim ke laptop. Tekan Ubah lagi untuk mengubahnya.');
       this.app.router.go('invoices');
       return;
     }
-    if (this.original && this.original.paid) {
-      Dialog.toast('Invoice sudah dibayar sehingga tidak bisa diubah.');
+    if (params[0] && !this.draft && (!this.original || this.original.voided)) {
+      this.app.router.go('invoices');
+      return;
+    }
+    if (this.original && InvoiceRepository.locked(this.original)) {
+      Dialog.toast('Invoice yang sudah ada pembayarannya tidak bisa diubah.');
       this.app.router.go(`invoice/${this.original.id}`);
       return;
     }
@@ -5382,7 +6512,9 @@ class CreateModule extends Module {
       ? `Nomor ${this.original.number} tetap sama walaupun isi atau tanggalnya diubah.`
       : (this.fromPo ? 'Data terisi dari PO. Periksa kolom Banyak dan Harga satuan, lalu simpan.' : 'Pilih barang dari daftar atau ketik baru. Kolom bertanda * wajib diisi.');
     outlet.append(h('div', { class: 'page' },
-      this.pageHeader('Penagihan', this.original ? 'Ubah Invoice' : 'Buat Invoice Baru', description),
+      this.pageHeader('Penagihan', this.heading(), this.posting
+        ? 'Draf ini dibuat di HP. Periksa isinya, lalu tekan Posting invoice. Nomor invoice diberikan saat diposting.'
+        : (this.drafting ? `${description} Di HP, invoice disimpan sebagai draf. Laptop yang memberi nomornya.` : description)),
       this.message,
       this.datalist(),
       this.details.customerList(),
@@ -5393,6 +6525,13 @@ class CreateModule extends Module {
     this.updateTotals();
     this.details.updateDue();
     this.warnIfNotReady();
+  }
+
+  heading() {
+    if (this.original) return 'Ubah Invoice';
+    if (this.posting) return 'Periksa Draf dari HP';
+    if (this.drafting) return this.draft ? 'Ubah Draf' : 'Buat Draf Invoice';
+    return 'Buat Invoice Baru';
   }
 
   warnIfNotReady() {
@@ -5413,10 +6552,10 @@ class CreateModule extends Module {
   }
 
   initialState() {
-    const source = this.original || this.app.pendingDraft;
+    const source = this.original || (this.draft && this.draft.fields) || this.app.pendingDraft;
     const config = this.config;
     this.app.pendingDraft = null;
-    this.dirty = Boolean(source && !this.original);
+    this.dirty = Boolean(source && !this.original && !this.draft);
     return {
       customer: { ...config.customer, ...(source ? source.customer : {}) },
       date: (source && source.date) || DateUtil.today(),
@@ -5427,7 +6566,8 @@ class CreateModule extends Module {
       ppnEnabled: Boolean(source && source.ppnEnabled),
       ppnRate: (source && source.ppnRate) || config.ppnRate,
       includeSj: Boolean(source && source.includeSj),
-      termDays: String(this.details.initialTerm(source)),
+      // A draft keeps the term chosen on the phone.
+      termDays: String(this.draft && Number.isInteger(source.termDays) ? source.termDays : this.details.initialTerm(source)),
       lines: source
         ? source.lines.map((line) => ({
           ...line,
@@ -5509,14 +6649,14 @@ class CreateModule extends Module {
     // Errors live here because this bar is always visible at any scroll position.
     this.barMessage = h('div', { class: 'action-message', role: 'alert' });
     this.saveButton = h('button', { class: 'button button-primary', type: 'button', onClick: () => this.save() },
-      this.original ? 'Simpan perubahan' : 'Simpan invoice');
+      this.original ? 'Simpan perubahan' : (this.posting ? 'Posting invoice' : (this.drafting ? 'Simpan draf' : 'Simpan invoice')));
     this.barProgress = this.fromPo ? h('div', { class: 'action-progress' }) : null;
     return h('div', { class: 'action-bar' },
       h('div', { class: 'action-total' }, 'Total invoice', this.barTotal),
       this.barProgress,
       this.barMessage,
       h('div', { class: 'form-actions' },
-        h('a', { class: 'button', href: this.original ? `#/invoice/${this.original.id}` : '#/' }, 'Batal'),
+        h('a', { class: 'button', href: this.original ? `#/invoice/${this.original.id}` : (this.draft ? '#/invoices' : '#/') }, 'Batal'),
         this.saveButton));
   }
 
@@ -5600,19 +6740,42 @@ class CreateModule extends Module {
   }
 
   async confirmWarnings(fields, totals) {
-    const warnings = InvoiceAudit.review({ ...fields, totals }, {
+    const invoices = await this.app.invoices.all();
+    const checks = InvoiceAudit.checks({ ...fields, totals }, {
       items: this.items,
-      invoices: await this.app.invoices.all(),
+      invoices,
       today: DateUtil.today(),
       id: this.original ? this.original.id : null,
+      bank: this.original ? this.original.issuer.bank : this.config.bank,
     });
+    const warnings = checks.filter((check) => check.warns).flatMap((check) => check.problems);
+    // Posting gives the invoice its number, so that is the moment the checks are always shown.
+    if (this.posting) {
+      const number = InvoiceRepository.allocate(new Set(invoices.map((invoice) => invoice.number)), { ...this.config.invoiceNumber }, fields.date, 'INV');
+      return Dialog.open('Periksa sebelum posting', [
+        this.checklist(checks, true),
+        h('p', { class: 'muted' }, `Nomor berikutnya ${number}. Setelah diposting, kesalahan diperbaiki lewat Ubah atau Batalkan, dan nomornya tetap tercatat.`),
+      ], [
+        { label: 'Periksa lagi', value: false },
+        { label: 'Posting invoice', value: true, primary: true },
+      ]);
+    }
     if (warnings.length === 0) return true;
+    const passed = checks.filter((check) => check.ok).length;
     return Dialog.open('Periksa sebelum menyimpan', [
       h('ul', {}, warnings.map((warning) => h('li', {}, warning))),
+      passed > 0 && h('p', { class: 'muted' }, `${passed} pemeriksaan lain sesuai.`),
     ], [
       { label: 'Periksa lagi', value: false },
       { label: 'Tetap simpan', value: true, primary: true },
     ]);
+  }
+
+  async saveDraft(fields) {
+    await this.app.drafts.save(this.draft && this.draft.uid, fields);
+    this.dirty = false;
+    Dialog.toast('Draf tersimpan di HP ini. Kirim ke laptop lewat Sinkronisasi.');
+    if (this.app.router.current === this) this.app.router.go('invoices');
   }
 
   async submit() {
@@ -5647,11 +6810,15 @@ class CreateModule extends Module {
       lines: result.lines,
     };
     if (!await this.confirmWarnings(fields, result.totals)) return;
+    if (this.drafting) {
+      await this.saveDraft(fields);
+      return;
+    }
     let invoice;
     try {
       invoice = this.original
         ? await this.app.invoices.revise(this.original.id, fields)
-        : await this.app.invoices.create(fields);
+        : await this.app.invoices.create(fields, this.posting ? this.draft : undefined);
       this.dirty = false;
     } catch (error) {
       if (error instanceof InvoiceLockedError) {
@@ -5869,7 +7036,7 @@ class InvoicesModule extends Module {
     // Always in the page, because a live region that appears together with its text is often not read out.
     this.announcer = h('p', { class: 'sr-only selection-status', 'aria-live': 'polite' });
     const header = this.pageHeader('Penagihan', 'Invoice Tersimpan', 'Centang invoice yang sudah dibayar, lalu tekan Tandai sudah dibayar.',
-      [h('a', { class: 'button', href: '#/aging' }, 'Umur piutang'), h('a', { class: 'button button-primary', href: '#/create' }, '+ Buat invoice')]);
+      [h('a', { class: 'button', href: '#/aging' }, 'Umur piutang'), h('a', { class: 'button button-primary', href: '#/create' }, Device.isPhone() ? '+ Buat draf' : '+ Buat invoice')]);
     this.backLink = header.querySelector('.back-link');
     outlet.append(h('div', { class: 'page' },
       header,
@@ -5886,6 +7053,7 @@ class InvoicesModule extends Module {
 
   async reload() {
     this.invoices = await this.app.invoices.all();
+    this.drafts = await this.app.drafts.all();
     const open = new Set(this.invoices.filter((invoice) => !invoice.paid && !invoice.voided).map((invoice) => invoice.id));
     for (const id of this.selected) if (!open.has(id)) this.selected.delete(id);
     this.app.updateAlarm();
@@ -5894,15 +7062,67 @@ class InvoicesModule extends Module {
 
   draw() {
     this.results = h('div');
-    this.body.replaceChildren(this.reminders(), this.toolbar(), this.results);
+    this.body.replaceChildren(this.draftBox(), this.reminders(), this.toolbar(), this.results);
     this.drawResults();
+  }
+
+  // Drafts written on a phone. On the laptop they wait here to be checked and posted;
+  // on the phone they show whether the laptop has them yet.
+  draftBox() {
+    if (this.drafts.length === 0) return '';
+    const phone = Device.isPhone();
+    const button = (label, onClick, danger) => h('button', { class: `button button-small ${danger ? 'button-danger' : ''}`, type: 'button', onClick }, label);
+    const row = (draft) => {
+      const waiting = phone && draft.state === 'sent';
+      const name = `${draft.fields.customer.name} • ${Format.date(draft.fields.date)} • ${Format.rupiah(draft.totals.total)}`;
+      const open = `#/create/draft/${draft.uid}`;
+      return h('div', { class: 'reminder-item' },
+        h('span', { class: 'draft-main' },
+          h('span', { class: `badge ${phone && !waiting ? 'badge-unpaid' : 'badge-paid'}` },
+            phone ? (waiting ? 'Menunggu diposting' : 'Draf · di HP') : 'Draf dari HP'),
+          ` ${name}`,
+          draft.returned && h('span', { class: 'due-note is-late' }, 'Dikembalikan dari laptop. Perbaiki, lalu kirim lagi.'),
+          draft.postedAs && h('span', { class: 'due-note is-late' }, `Versi sebelumnya sudah diposting sebagai ${draft.postedAs}. Hapus draf ini kalau tidak ada perubahan.`)),
+        h('span', { class: 'page-actions' }, phone
+          ? (waiting
+            ? button('Ubah lagi', () => this.reopenDraft(draft))
+            : [h('a', { class: 'button button-small', href: open }, 'Ubah'), button('Hapus', () => this.removeDraft(draft, name), true)])
+          : [h('a', { class: 'button button-small button-primary', href: open }, 'Periksa dan posting'),
+            button('Kembalikan ke HP', () => this.returnDraft(draft, name))]));
+    };
+    return h('section', { class: 'panel draft-box' },
+      h('h2', {}, phone ? 'Draf di HP Ini' : 'Kotak Draf'),
+      h('p', { class: 'muted panel-text' }, phone
+        ? 'Draf belum punya nomor invoice dan belum bisa dicetak. Kirim ke laptop lewat Sinkronisasi. Laptop yang memberi nomor.'
+        : 'Draf dari HP menunggu diperiksa. Nomor invoice diberikan saat diposting.'),
+      h('div', { class: 'reminder-list' }, this.drafts.map(row)));
+  }
+
+  async reopenDraft(draft) {
+    const confirmed = await Dialog.confirm('Draf ini sudah dikirim ke laptop. Setelah diubah, kirim lagi lewat Sinkronisasi supaya laptop memakai versi baru.', 'Ubah lagi');
+    if (!confirmed) return;
+    await this.app.drafts.reopen(draft.uid);
+    this.app.router.go(`create/draft/${draft.uid}`);
+  }
+
+  async removeDraft(draft, name) {
+    if (!await Dialog.confirm(`Hapus draf ${name}? Draf yang dihapus tidak bisa dikembalikan.`, 'Hapus draf', true)) return;
+    await this.app.drafts.remove(draft.uid);
+    await this.reload();
+  }
+
+  async returnDraft(draft, name) {
+    const confirmed = await Dialog.confirm(`Kembalikan draf ${name} ke HP? Draf keluar dari Kotak Draf, dan bisa diperbaiki di HP setelah sinkronisasi berikutnya.`, 'Kembalikan');
+    if (!confirmed) return;
+    await this.app.drafts.giveBack(draft.uid);
+    await this.reload();
   }
 
   reminders() {
     const today = DateUtil.today();
     const due = Reminder.due(this.invoices, today);
     if (due.length === 0) return '';
-    const total = due.reduce((sum, invoice) => sum + invoice.totals.total, 0);
+    const total = due.reduce((sum, invoice) => sum + InvoiceRepository.outstanding(invoice), 0);
     return h('div', { class: 'notice notice-warning', role: 'status' },
       h('strong', {}, `${due.length} invoice sudah jatuh tempo, total ${Format.rupiah(total)}. Centang yang sudah dibayar.`),
       h('div', { class: 'reminder-list' }, due.map((invoice) => h('div', { class: 'reminder-item' },
@@ -5911,7 +7131,7 @@ class InvoicesModule extends Module {
           h('span', {},
             h('a', { href: `#/invoice/${invoice.id}` }, invoice.number),
             // The agreed term is at hand when the vendor phones the hotel about it.
-            ` • ${invoice.customer.name} • ${Format.rupiah(invoice.totals.total)} • ${Reminder.dueText(invoice, today)}`,
+            ` • ${invoice.customer.name} • ${InvoicesModule.owedText(invoice)} • ${Reminder.dueText(invoice, today)}`,
             Number.isInteger(invoice.termDays) ? ` (termin ${invoice.termDays} hari)` : '')),
         h('button', {
           class: 'button button-small',
@@ -5944,7 +7164,7 @@ class InvoicesModule extends Module {
     const chosen = this.invoices.filter((invoice) => this.selected.has(invoice.id));
     this.dirty = chosen.length > 0;
     this.bar.hidden = !this.dirty;
-    const total = Format.rupiah(chosen.reduce((sum, invoice) => sum + invoice.totals.total, 0));
+    const total = Format.rupiah(chosen.reduce((sum, invoice) => sum + InvoiceRepository.outstanding(invoice), 0));
     this.barCount.textContent = `${chosen.length} invoice dipilih`;
     this.barTotal.textContent = total;
     this.announcer.textContent = this.dirty ? `${chosen.length} invoice dipilih, total ${total}` : '';
@@ -6088,7 +7308,7 @@ class InvoicesModule extends Module {
     const { filter } = this;
     const invoices = this.visible();
     const active = invoices.filter((invoice) => !invoice.voided);
-    const sum = (list) => list.reduce((total, invoice) => total + invoice.totals.total, 0);
+    const sum = (list, amount = (invoice) => invoice.totals.total) => list.reduce((total, invoice) => total + amount(invoice), 0);
     const range = this.period();
     // The whole period prints as one PDF, for example to send a month of invoices to the hotel.
     const printable = !this.allDates() && filter.status === 'all' && invoices.length > 0;
@@ -6099,7 +7319,7 @@ class InvoicesModule extends Module {
         this.stat('Periode', this.allDates() ? 'Semua tanggal' : RangeCalendar.label(range)),
         this.stat('Jumlah invoice', active.length),
         this.stat('Total tagihan', Format.rupiah(sum(active))),
-        this.stat('Belum dibayar', Format.rupiah(sum(active.filter((invoice) => !invoice.paid))))),
+        this.stat('Belum dibayar', Format.rupiah(sum(active, InvoiceRepository.outstanding)))),
       invoices.length > 0 ? h('div', { class: 'results-actions' },
         // The recap holds exactly the rows on screen, so what the vendor sees is what the accountant gets.
         h('button', { class: 'button button-small recap-period', type: 'button', onClick: () => this.saveRecap(invoices, range) }, 'Unduh rekap (Excel)'),
@@ -6160,8 +7380,16 @@ class InvoicesModule extends Module {
     }
     const today = DateUtil.today();
     const late = DateUtil.daysBetween(Reminder.dueDate(invoice), today) >= 0;
+    const partly = InvoiceRepository.received(invoice) > 0;
     return [h('label', { class: 'check' }, this.pickBox(invoice), h('span', { class: 'pick-label' }, 'Belum')),
+      partly && h('small', { class: 'due-note' }, `Sebagian, ${InvoicesModule.owedText(invoice)}`),
       h('small', { class: late ? 'due-note is-late' : 'due-note' }, Reminder.dueText(invoice, today))];
+  }
+
+  // A part-paid bill says what is left, so the call to the hotel asks for the right amount.
+  static owedText(invoice) {
+    const owed = Format.rupiah(InvoiceRepository.outstanding(invoice));
+    return InvoiceRepository.received(invoice) > 0 ? `sisa ${owed}` : owed;
   }
 
   row(invoice) {
@@ -6239,30 +7467,57 @@ class InvoiceDetailModule extends Module {
       return;
     }
     this.config = await this.app.config.get();
+    this.others = await this.app.invoices.all();
     this.app.updateAlarm();
     this.draw();
   }
 
   status() {
     if (this.invoice.voided) return h('span', { class: 'badge badge-void' }, 'Dibatalkan');
+    const partly = InvoiceRepository.received(this.invoice) > 0;
     return this.invoice.paid
       ? h('span', { class: 'badge badge-paid' }, `Sudah dibayar ${this.invoice.paidAt ? Format.date(this.invoice.paidAt) : ''}`.trim())
-      : [h('span', { class: 'badge badge-unpaid' }, 'Belum dibayar'), ' ',
+      : [h('span', { class: 'badge badge-unpaid' }, partly ? 'Dibayar sebagian' : 'Belum dibayar'), ' ',
         h('span', { class: DateUtil.daysBetween(Reminder.dueDate(this.invoice), DateUtil.today()) >= 0 ? 'due-note due-inline is-late' : 'due-note due-inline' }, `${Reminder.dueText(this.invoice, DateUtil.today())} (termin ${Number.isInteger(this.invoice.termDays) ? `${this.invoice.termDays} hari` : '1 bulan'})`)];
   }
 
   actions() {
     const { invoice } = this;
     const hasSj = invoice.includeSj && invoice.sjNumber;
-    const editable = !invoice.voided && !invoice.paid;
+    const editable = !InvoiceRepository.locked(invoice);
+    const open = !invoice.voided && !invoice.paid;
+    const partly = open && InvoiceRepository.received(invoice) > 0;
     return [
       h('button', { class: 'button button-primary', type: 'button', onClick: () => this.print() }, 'Cetak / Simpan PDF'),
       editable && h('a', { class: 'button', href: `#/create/${invoice.id}` }, 'Ubah'),
       !invoice.voided && !hasSj && h('button', { class: 'button', type: 'button', onClick: () => this.addDeliveryNote() }, 'Buat Surat Jalan'),
+      open && h('button', { class: 'button', type: 'button', onClick: () => this.recordPayment() }, 'Catat pembayaran'),
       !invoice.voided && h('button', { class: 'button', type: 'button', onClick: () => this.togglePaid() },
-        invoice.paid ? 'Tandai belum dibayar' : 'Tandai sudah dibayar'),
+        invoice.paid ? 'Tandai belum dibayar' : (partly ? 'Tandai lunas' : 'Tandai sudah dibayar')),
+      partly && h('button', { class: 'button', type: 'button', onClick: () => this.unmark() }, 'Hapus pembayaran'),
       editable && h('button', { class: 'button button-danger', type: 'button', onClick: () => this.voidInvoice() }, 'Batalkan'),
     ];
+  }
+
+  // What has come in so far, with the tax withheld named apart, since it is matched against a tax slip, not the bank.
+  payments() {
+    const { invoice } = this;
+    if (!invoice.payments || invoice.voided) return '';
+    const pph = InvoiceRepository.received(invoice, 'pph');
+    return h('div', { class: 'notice notice-info' },
+      `Transfer diterima ${Format.rupiah(InvoiceRepository.received(invoice, 'transfer'))}`,
+      pph ? `, potongan PPh ${Format.rupiah(pph)}` : '',
+      invoice.paid ? '. Lunas.' : `. Sisa ${Format.rupiah(InvoiceRepository.outstanding(invoice))}. Invoice terkunci selama ada pembayaran.`);
+  }
+
+  // What was verified about this invoice, judged against the day it was issued so it does not age into a warning.
+  checks() {
+    const { invoice } = this;
+    if (invoice.voided) return '';
+    const issued = invoice.createdAt ? DateUtil.toIso(new Date(invoice.createdAt)) : invoice.date;
+    return this.checklist(InvoiceAudit.checks(invoice, {
+      items: [], invoices: this.others, today: issued, id: invoice.id, bank: invoice.issuer.bank,
+    }));
   }
 
   history() {
@@ -6306,6 +7561,8 @@ class InvoiceDetailModule extends Module {
         invoice.voided && h('div', { class: 'notice notice-warning' }, InvoiceDetailModule.voidSummary(invoice)),
         invoice.paid && h('div', { class: 'notice notice-info' },
           'Invoice sudah dibayar sehingga terkunci. Tandai belum dibayar kalau perlu mengubah.'),
+        this.payments(),
+        this.checks(),
         this.history(),
         hasSj && h('div', { class: 'tabs' }, tab('invoice', 'Invoice'), tab('sj', 'Surat Jalan'))),
       stage);
@@ -6328,14 +7585,68 @@ class InvoiceDetailModule extends Module {
 
   async togglePaid() {
     if (this.invoice.paid) {
-      // One stray click would put a paid invoice back into the reminders, so it is asked first.
-      const received = this.invoice.paidAt ? ` Tanggal uang masuk ${Format.date(this.invoice.paidAt)} tetap tercatat di riwayat.` : '';
-      if (!await Dialog.confirm(`Tandai ${this.invoice.number} belum dibayar?${received}`, 'Ya, belum dibayar')) return;
-      await this.runGuarded(() => this.app.invoices.setPaid(this.id, false));
+      await this.unmark();
       return;
     }
     const paidAt = await this.askPaidDate([this.invoice]);
     if (paidAt) await this.runGuarded(() => this.app.invoices.markPaid([this.id], paidAt));
+  }
+
+  // One stray click would put money back into the reminders, so it is asked first.
+  async unmark() {
+    const { invoice } = this;
+    const received = invoice.paidAt ? ` Tanggal uang masuk ${Format.date(invoice.paidAt)} tetap tercatat di riwayat.` : '';
+    const parts = invoice.payments ? ` Pembayaran ${Format.rupiah(InvoiceRepository.received(invoice))} yang tercatat dihapus, tetapi tetap terlihat di riwayat.` : '';
+    if (!await Dialog.confirm(`Tandai ${invoice.number} belum dibayar?${received}${parts}`, 'Ya, belum dibayar')) return;
+    await this.runGuarded(() => this.app.invoices.setPaid(this.id, false));
+  }
+
+  // Part of the bill: a first transfer, or a transfer with the tax the hotel withheld.
+  async recordPayment() {
+    const owed = InvoiceRepository.outstanding(this.invoice);
+    const money = (value) => {
+      const input = h('input', { type: 'text', inputmode: 'numeric', class: 'number', value: value ? Format.number(value) : '' });
+      Module.selectOnFocus(input);
+      return input;
+    };
+    const transfer = money(owed);
+    const pph = money(0);
+    const error = h('p', { class: 'dialog-error', role: 'alert' });
+    const paid = this.paidDate(error);
+    const left = h('p', { 'aria-live': 'polite' });
+    const amounts = () => ({ transfer: Format.parseRupiah(transfer.value), pph: Format.parseRupiah(pph.value) });
+    const update = () => {
+      const rest = owed - amounts().transfer - amounts().pph;
+      if (Number.isNaN(rest) || rest < 0) left.textContent = '';
+      else left.textContent = rest === 0 ? 'Lunas setelah ini.' : `Sisa setelah ini ${Format.rupiah(rest)}.`;
+    };
+    for (const input of [transfer, pph]) input.addEventListener('input', update);
+    update();
+    const fail = (message, input) => {
+      error.textContent = message;
+      input.focus();
+      return false;
+    };
+    const validate = () => {
+      const { transfer: sent, pph: withheld } = amounts();
+      if (Number.isNaN(sent)) return fail('Tulis jumlah transfer dalam rupiah, contoh 1.500.000.', transfer);
+      if (Number.isNaN(withheld)) return fail('Tulis potongan PPh dalam rupiah, contoh 30.000.', pph);
+      if (sent + withheld === 0) return fail('Isi jumlah transfer atau potongan PPh.', transfer);
+      if (sent + withheld > owed) return fail(`Jumlahnya lebih dari sisa tagihan ${Format.rupiah(owed)}.`, transfer);
+      return paid.validate();
+    };
+    const confirmed = await Dialog.open('Catat pembayaran', [
+      h('p', {}, `${this.invoice.number}, sisa tagihan ${Format.rupiah(owed)}.`),
+      this.field('Transfer masuk', transfer, 'Uang yang masuk ke rekening'),
+      this.field('Potongan PPh', pph, 'Kalau hotel memotong pajak. Simpan bukti potongnya.'),
+      paid.nodes,
+      left,
+      error,
+    ], [
+      { label: 'Kembali', value: false },
+      { label: 'Simpan pembayaran', value: true, primary: true, validate },
+    ]);
+    if (confirmed) await this.runGuarded(() => this.app.invoices.recordPayment(this.id, paid.date.value, amounts()));
   }
 
   // A reason is required so the void can still be explained months later.
@@ -6425,6 +7736,8 @@ class ConfigModule extends Module {
         this.saveState,
         h('button', { class: 'button button-primary', type: 'button', onClick: () => this.save() }, 'Simpan pengaturan')),
       storagePanel,
+      this.devicePanel(),
+      this.vaultPanel(),
       transferPanel,
       new Moyen([transferPanel, storagePanel]).element));
   }
@@ -6587,6 +7900,99 @@ class ConfigModule extends Module {
       h('button', { class: 'button', type: 'button', onClick: () => this.changeFolder() }, 'Ganti tempat penyimpanan'));
   }
 
+  // The laptop gives invoice numbers and a phone only drafts. The guess is right for most devices; this corrects it.
+  devicePanel() {
+    const select = h('select', {
+      onChange: (event) => {
+        Device.setRole(event.target.value);
+        Dialog.toast(`Perangkat ini sekarang dipakai sebagai ${Device.ROLES[event.target.value]}.`);
+      },
+    }, Object.keys(Device.ROLES).map((role) => h('option', { value: role, selected: role === Device.role() }, Device.ROLES[role])));
+    return h('section', { class: 'panel panel-spaced' },
+      h('h2', {}, 'Peran Perangkat Ini'),
+      h('div', { class: 'form-grid form-grid-3' },
+        this.field('Perangkat ini dipakai sebagai', select, 'Laptop utama memberi nomor invoice. HP hanya membuat draf, lalu laptop yang mempostingnya.')));
+  }
+
+  static BACKUP_REASONS = { sinkron: 'sinkronisasi', import: 'import', pulihkan: 'pemulihan' };
+  static BACKUPS_SHOWN = 6;
+
+  static backupLabel(backup) {
+    return backup.kind === 'daily'
+      ? `harian ${Format.date(backup.date)}`
+      : `sebelum ${ConfigModule.BACKUP_REASONS[backup.reason] || backup.reason}, ${Format.date(backup.date)} pukul ${backup.time}`;
+  }
+
+  // Brankas Data: every copy kept of the data, and the way back to one of them.
+  vaultPanel() {
+    const status = h('p', { class: 'muted panel-text', role: 'status' }, 'Memeriksa cadangan...');
+    const list = h('div', { class: 'reminder-list' });
+    this.fillVault(status, list);
+    return h('section', { class: 'panel panel-spaced' }, h('h2', {}, 'Brankas Data'), status, list);
+  }
+
+  async fillVault(status, list, all) {
+    const { backend } = this.app.store;
+    const backups = backend.backups ? await backend.backups() : [];
+    const daily = backups.filter((backup) => backup.kind === 'daily').length;
+    if (backups.length === 0) {
+      status.textContent = this.app.storage.mode === 'browser'
+        ? 'Belum ada cadangan di perangkat ini. Salinan dibuat otomatis sebelum setiap sinkronisasi dan import. Cadangan harian ada di laptop.'
+        : 'Belum ada cadangan. Cadangan pertama dibuat otomatis saat data berubah.';
+      return;
+    }
+    status.textContent = `Cadangan terakhir: ${ConfigModule.backupLabel(backups[0])}. Tersimpan ${daily} cadangan harian dan ${backups.length - daily} salinan sebelum perubahan. Semuanya dibuat otomatis, dan boleh dihapus kalau sudah tidak diperlukan.`;
+    const shown = all ? backups : backups.slice(0, ConfigModule.BACKUPS_SHOWN);
+    list.replaceChildren(
+      ...shown.map((backup) => h('div', { class: 'reminder-item' },
+        h('span', {}, `Cadangan ${ConfigModule.backupLabel(backup)}`),
+        h('span', { class: 'page-actions' },
+          h('button', { class: 'button button-small', type: 'button', onClick: () => this.restoreBackup(backup) }, 'Pulihkan'),
+          backend.removeBackup && h('button', { class: 'button button-small button-danger', type: 'button', onClick: () => this.removeBackup(backup, status, list, all) }, 'Hapus')))),
+      ...(shown.length < backups.length
+        ? [h('button', { class: 'button button-small', type: 'button', onClick: () => this.fillVault(status, list, true) }, `Tampilkan semua (${backups.length})`)]
+        : []));
+  }
+
+  // Copies are made automatically, and the vendor may clear out the ones no longer wanted.
+  async removeBackup(backup, status, list, all) {
+    const label = ConfigModule.backupLabel(backup);
+    const confirmed = await Dialog.confirm(`Hapus cadangan ${label}? Cadangan yang dihapus tidak bisa dikembalikan. Data yang sedang dipakai tidak berubah.`, 'Hapus cadangan', true);
+    if (!confirmed) return;
+    await this.app.store.backend.removeBackup(backup.name);
+    list.replaceChildren();
+    await this.fillVault(status, list, all);
+    Dialog.toast(`Cadangan ${label} dihapus.`);
+  }
+
+  // The data as it is now goes into the vault first, so a restore is never a one-way door.
+  async restoreBackup(backup) {
+    if (this.dirty) {
+      Dialog.toast('Simpan pengaturan dulu sebelum memulihkan.');
+      return;
+    }
+    const { store } = this.app;
+    const label = ConfigModule.backupLabel(backup);
+    let text;
+    let saved;
+    try {
+      text = await store.backend.readBackup(backup.name);
+      saved = DataFormat.parse(text).data;
+    } catch (error) {
+      this.showError(`Cadangan ${label} rusak dan tidak bisa dipakai. Pilih cadangan lain.`);
+      return;
+    }
+    const now = store.read((data) => data.invoices.length);
+    const confirmed = await Dialog.confirm(
+      `Pulihkan dari cadangan ${label}? Isinya ${saved.invoices.length} invoice dan ${saved.items.length} barang. Data sekarang (${now} invoice) disimpan dulu ke Brankas Data, jadi bisa dikembalikan.`,
+      'Pulihkan');
+    if (!confirmed) return;
+    await store.safetyCopy('pulihkan');
+    await store.restore(text);
+    Dialog.toast(`Data dipulihkan dari cadangan ${label}.`);
+    await this.app.router.refresh();
+  }
+
   async changeFolder() {
     // Switching folders reloads the site, which would throw away settings typed but not saved.
     if (this.dirty) {
@@ -6681,6 +8087,8 @@ class ConfigModule extends Module {
     const confirmed = await Dialog.confirm(this.importQuestion(kind, file), 'Import');
     if (!confirmed) return;
     const { transfer } = this.app;
+    // An import can be undone from Brankas Data.
+    await this.app.store.safetyCopy('import');
     if (kind === 'invoices') await transfer.importInvoices(file);
     else if (kind === 'items') await transfer.importItems(file);
     else await transfer.importConfig(file);
@@ -6864,7 +8272,7 @@ class AgingModule extends Module {
       .filter((entry) => entry.late > 0));
     if (overdue.length === 0) return '';
     const oldest = overdue.reduce((a, b) => (b.late > a.late ? b : a));
-    const total = overdue.reduce((sum, entry) => sum + entry.invoice.totals.total, 0);
+    const total = overdue.reduce((sum, entry) => sum + InvoiceRepository.outstanding(entry.invoice), 0);
     return h('div', { class: `notice ${oldest.late > 60 ? 'notice-error' : 'notice-warning'} aging-alarm`, role: 'alert' },
       h('div', {},
         h('strong', {}, `${overdue.length} invoice lewat jatuh tempo, total ${Format.rupiah(total)}.`),
@@ -6964,6 +8372,583 @@ class StorageGate {
 }
 
 </script>
+  <script>
+// The sync tab on the right edge of the screen and the panel it opens.
+// The roles are fixed, so nobody picks a direction: the laptop shows a one-time QR code through Moyen Sync,
+// the phone scans it, and in that one scan the laptop's invoices go to the phone and the phone's drafts go to the laptop.
+// Neither side changes before its owner has read a summary, and every sync can be undone.
+class SyncPanel {
+  static POLL_MS = 1000;
+  // Status checks may wait while the helper is busy with a large upload, so a few misses are tolerated.
+  static MAX_MISSES = 3;
+  static LAUNCH_WAIT_MS = 12000;
+  static INSTALL_WAIT_MS = 300000;
+  static SEEN_KEY = 'yearendproject-sync-seen';
+  static PENDING_KEY = 'yearendproject-sync-pending';
+  // This device answers only to a Moyen Sync page on the local network.
+  static LAPTOP_PAGE = /^http:\/\/(localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+):8737\/s\/[A-Za-z0-9_-]+$/;
+
+  constructor(app, service = new SyncService()) {
+    this.app = app;
+    this.service = service;
+    this.view = null;
+    this.session = null;
+  }
+
+  mount() {
+    const label = Device.isPhone() ? 'Sinkronisasi dengan laptop' : 'Sinkronisasi dengan HP';
+    this.tab = h('button', {
+      class: 'sync-tab no-print',
+      type: 'button',
+      title: label,
+      'aria-label': label,
+      'aria-haspopup': 'dialog',
+      onClick: () => this.open(),
+    }, Icon.create('chevronLeft', 16), Icon.create('sync', 22));
+    document.body.append(this.tab);
+  }
+
+  // Opens the panel, unless it is open already. onClose clears whatever the caller set up.
+  begin(onClose) {
+    if (this.view) return false;
+    this.view = h('div', { class: 'sync-panel' });
+    Dialog.open('Sinkronisasi', this.view, [{ label: 'Tutup', value: false }]).then(() => {
+      this.stop();
+      this.view = null;
+      if (onClose) onClose();
+    });
+    return true;
+  }
+
+  async open() {
+    if (!this.begin()) return;
+    if (Device.isPhone()) this.showPhone();
+    else await this.findHelper();
+  }
+
+  close() {
+    const dialog = this.view && this.view.closest('dialog');
+    if (dialog) dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+  }
+
+  render(...children) {
+    if (!this.view) return;
+    // Skipped like h() skips them, so a condition can sit inline.
+    this.view.replaceChildren(...children.filter((child) => child !== false && child !== null && child !== undefined && child !== ''));
+    const target = this.view.querySelector('[data-autofocus]');
+    if (target) target.focus();
+  }
+
+  // Stops watching and waiting, and ends a QR code nobody used, so no data waits in the helper.
+  stop() {
+    clearTimeout(this.timer);
+    this.waiting = null;
+    if (this.session) this.service.cancel(this.session.sid);
+    this.session = null;
+  }
+
+  home() {
+    this.stop();
+    if (Device.isPhone()) this.showPhone();
+    else if (this.helper) this.showLaptop();
+    else this.showLauncher();
+  }
+
+  // After a problem the helper may be gone, so the laptop looks for it again.
+  again() {
+    this.stop();
+    if (Device.isPhone()) this.showPhone();
+    else this.findHelper();
+  }
+
+  status(text) {
+    return h('p', { class: 'sync-status', role: 'status' }, text);
+  }
+
+  choice(icon, title, text, onClick) {
+    return h('button', { class: 'sync-choice', type: 'button', onClick },
+      Icon.create(icon, 24), h('strong', {}, title), h('span', {}, text));
+  }
+
+  actions(...buttons) {
+    return h('div', { class: 'sync-actions' }, buttons);
+  }
+
+  button(label, onClick, primary = false) {
+    return h('button', { class: `button ${primary ? 'button-primary' : ''}`, type: 'button', 'data-autofocus': primary, onClick }, label);
+  }
+
+  // ---- Laptop: start Moyen Sync, show the QR code, receive what the phone hands back.
+
+  async findHelper() {
+    this.render(this.status('Mencari Moyen Sync di laptop ini...'));
+    const helper = await this.service.hello();
+    if (helper) this.useHelper(helper);
+    else this.showLauncher();
+  }
+
+  useHelper(helper) {
+    this.helper = helper;
+    Device.write(SyncPanel.SEEN_KEY, '1');
+    if (!helper.addresses.some((entry) => entry.address === this.address)) {
+      this.address = helper.addresses.length ? helper.addresses[0].address : null;
+    }
+    this.showLaptop();
+  }
+
+  // Moyen Sync is not running. A laptop that has used it before starts it with one click;
+  // a new laptop installs it once, from the copy that travels inside the app.
+  showLauncher(failed) {
+    this.helper = null;
+    const seen = Boolean(Device.read(SyncPanel.SEEN_KEY));
+    this.render(
+      h('p', {}, 'Sinkronisasi memakai Moyen Sync, program kecil yang menyala di laptop ini selama sinkronisasi.'),
+      failed && h('div', { class: 'notice notice-warning', role: 'status' },
+        'Moyen Sync belum menyala. Kalau belum pernah dipasang di laptop ini, tekan Pasang Moyen Sync.'),
+      h('p', { class: 'muted' }, seen
+        ? 'Tekan Nyalakan Moyen Sync. Jika browser bertanya, pilih Buka.'
+        : 'Pasang dulu, cukup sekali dan tanpa hak admin. Setelah itu Moyen Sync dinyalakan dari tombol di sini.'),
+      this.actions(
+        this.button(seen ? 'Pasang ulang' : 'Sudah terpasang? Nyalakan', () => (seen ? this.install() : this.launch())),
+        this.button(seen ? 'Nyalakan Moyen Sync' : 'Pasang Moyen Sync', () => (seen ? this.launch() : this.install()), true)),
+      this.fileSection());
+  }
+
+  launch() {
+    this.service.launch();
+    return this.waitForHelper([this.status('Menyalakan Moyen Sync... Jika browser bertanya, pilih Buka.')], SyncPanel.LAUNCH_WAIT_MS);
+  }
+
+  install() {
+    TransferService.save(this.service.installer(), SyncService.INSTALLER_NAME);
+    return this.waitForHelper([
+      h('ol', {},
+        h('li', {}, 'File Pasang Moyen Sync sedang diunduh. Buka dari daftar unduhan browser, biasanya di pojok kanan atas.'),
+        h('li', {}, 'Jika browser menahannya, pilih Simpan. Jika Windows bertanya, pilih Info selengkapnya (More info), lalu Tetap jalankan (Run anyway).'),
+        h('li', {}, 'Jika Windows bertanya soal firewall, pilih Izinkan untuk jaringan Pribadi.')),
+      this.status('Menunggu Moyen Sync menyala. Halaman ini lanjut sendiri.'),
+    ], SyncPanel.INSTALL_WAIT_MS);
+  }
+
+  // Keeps asking until the helper answers, the time runs out, or the vendor goes back.
+  async waitForHelper(content, limit) {
+    this.render(...content, this.actions(this.button('Batal', () => this.home())));
+    const run = {};
+    this.waiting = run;
+    const deadline = Date.now() + limit;
+    while (this.waiting === run && Date.now() < deadline) {
+      const helper = await this.service.hello();
+      if (this.waiting !== run) return;
+      if (helper) {
+        this.waiting = null;
+        this.useHelper(helper);
+        return;
+      }
+      await new Promise((resolve) => { setTimeout(resolve, SyncPanel.POLL_MS); });
+    }
+    if (this.waiting !== run) return;
+    this.waiting = null;
+    this.showLauncher(true);
+  }
+
+  showLaptop() {
+    const { addresses } = this.helper;
+    const offline = addresses.length === 0;
+    const picker = addresses.length > 1 && h('label', { class: 'field' },
+      h('span', { class: 'field-label' }, 'Jaringan'),
+      h('select', { onChange: (event) => { this.address = event.target.value; } }, addresses.map((entry) =>
+        h('option', { value: entry.address, selected: entry.address === this.address }, `${entry.name} (${entry.address})`))),
+      h('span', { class: 'field-hint' }, 'Pilih jaringan yang juga dipakai HP.'));
+    this.render(
+      h('p', {}, 'Pastikan HP dan laptop memakai Wi-Fi atau hotspot yang sama. Laptop membuat QR, HP memindainya dengan kamera.'),
+      h('p', { class: 'muted' }, Device.lastSync()
+        ? `Terakhir sinkron dengan HP: ${Pulse.ago(Device.lastSync())}.`
+        : 'Laptop ini belum pernah sinkron dengan HP.'),
+      offline && h('div', { class: 'notice notice-warning', role: 'status' }, 'Laptop belum tersambung ke Wi-Fi atau hotspot. Sambungkan dulu, lalu tekan Coba lagi.'),
+      picker,
+      offline
+        ? this.actions(this.button('Coba lagi', () => this.findHelper(), true))
+        : h('button', { class: 'button button-primary sync-main', type: 'button', 'data-autofocus': true, onClick: () => this.start() }, 'Sinkronkan dengan HP'));
+  }
+
+  async start() {
+    this.stop();
+    this.render(this.status('Membuat QR...'));
+    let session;
+    try {
+      session = await this.service.createSession(JSON.stringify(this.app.transfer.syncFile()));
+    } catch (error) {
+      if (!(error instanceof SyncError)) throw error;
+      this.showProblem(error.message);
+      return;
+    }
+    // Closed while the QR was being made: end it at once.
+    if (!this.view) {
+      this.service.cancel(session.sid);
+      return;
+    }
+    this.session = session;
+    this.misses = 0;
+    const url = SyncService.phoneUrl(this.address, session.token);
+    this.qr = h('div', { class: 'sync-qr' }, QrCode.svg(url, 'QR untuk dipindai kamera HP'));
+    this.meter = h('span', {});
+    this.statusLine = this.status('');
+    this.render(
+      h('p', { class: 'sync-lead' }, 'Pindai QR ini dengan kamera HP. Invoice dari laptop masuk ke HP, dan draf dari HP masuk ke laptop.'),
+      this.qr,
+      h('div', { class: 'sync-meter', 'aria-hidden': 'true' }, this.meter),
+      this.statusLine,
+      h('p', { class: 'sync-url' }, 'Kamera tidak bisa memindai? Ketik alamat ini di browser HP: ', h('strong', {}, url)),
+      this.actions(this.button('Kembali', () => this.home())));
+    this.update(session);
+  }
+
+  watch() {
+    clearTimeout(this.timer);
+    const session = this.session;
+    this.timer = setTimeout(async () => {
+      let status;
+      try {
+        status = await this.service.status(session.sid);
+      } catch (error) {
+        if (!(error instanceof SyncError)) throw error;
+        if (this.session !== session) return;
+        this.misses += 1;
+        if (this.misses < SyncPanel.MAX_MISSES) this.watch();
+        else {
+          this.session = null;
+          this.showProblem(error.message);
+        }
+        return;
+      }
+      // The panel was closed or a new QR was made while waiting.
+      if (this.session !== session) return;
+      this.misses = 0;
+      this.update(status);
+    }, SyncPanel.POLL_MS);
+  }
+
+  update(status) {
+    if (status.state === 'waiting') {
+      const seconds = Math.max(0, status.secondsLeft);
+      this.meter.style.width = `${Math.min(100, (seconds / 60) * 100)}%`;
+      this.statusLine.textContent = `Menunggu HP memindai. Berlaku ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')} lagi.`;
+      this.watch();
+    } else if (status.state === 'opened') {
+      this.qr.classList.add('is-used');
+      this.meter.parentElement.hidden = true;
+      this.statusLine.textContent = status.taken
+        ? 'HP sudah menerima data laptop. Menunggu kiriman dari HP.'
+        : 'HP sudah terhubung. Lanjutkan di HP.';
+      this.watch();
+    } else if (status.state === 'done') {
+      const { sid } = this.session;
+      // Finished: nothing is left in the helper to cancel.
+      this.session = null;
+      this.receive(sid);
+    } else {
+      this.session = null;
+      this.render(
+        h('div', { class: 'notice notice-warning', role: 'status' }, status.taken
+          ? 'HP sudah menerima data laptop, tetapi kirimannya belum sampai sebelum waktu habis. Buat QR baru untuk mengulang.'
+          : 'QR sudah tidak berlaku. Demi keamanan, QR hanya berlaku 60 detik dan sekali pakai.'),
+        this.actions(this.button('Kembali', () => this.home()), this.button('Buat QR baru', () => this.start(), true)));
+    }
+  }
+
+  async receive(sid) {
+    this.render(this.status('Mengambil kiriman dari HP...'));
+    let file;
+    try {
+      file = TransferService.parse(await this.service.file(sid), 'sync');
+    } catch (error) {
+      if (!(error instanceof SyncError) && !(error instanceof TransferError)) throw error;
+      this.showProblem(error.message);
+      return;
+    }
+    // With nothing new from the phone there is nothing to decide, so no extra tap is asked for.
+    if (SyncPanel.isEmpty(this.app.transfer.previewSync(file))) {
+      Device.markSynced();
+      this.render(
+        h('div', { class: 'notice notice-info', role: 'status' }, 'Sinkronisasi selesai. HP sudah menerima data laptop, dan tidak ada draf atau data baru dari HP.'),
+        this.actions(this.button('Selesai', () => this.close(), true)));
+      return;
+    }
+    this.review(file, { lead: 'HP sudah menerima data laptop. Ini kiriman dari HP:', label: 'Terima' });
+  }
+
+  // ---- Phone: what to do, and the slower way through a file when scanning does not work.
+
+  showPhone() {
+    const drafts = this.app.store.read((data) => DraftRepository.list(data));
+    const unsent = drafts.filter((draft) => draft.state !== 'sent').length;
+    const draftText = unsent > 0
+      ? `${unsent} draf belum dikirim ke laptop.`
+      : (drafts.length > 0 ? 'Semua draf sudah dikirim ke laptop.' : 'Belum ada draf di HP ini.');
+    this.render(
+      h('ol', {},
+        h('li', {}, 'Di laptop, tekan tombol sinkron di sisi kanan layar, lalu Sinkronkan dengan HP.'),
+        h('li', {}, 'Pindai QR di layar laptop dengan kamera HP ini.'),
+        h('li', {}, 'Ikuti langkah di layar. Ringkasan tampil dulu sebelum ada yang berubah.')),
+      h('p', { class: 'muted' }, draftText, ' ', Device.lastSync()
+        ? `Terakhir sinkron dengan laptop: ${Pulse.ago(Device.lastSync())}.`
+        : 'HP ini belum pernah sinkron dengan laptop.'),
+      this.fileSection());
+  }
+
+  fileSection() {
+    const input = h('input', {
+      type: 'file',
+      accept: 'application/json,.json',
+      hidden: true,
+      onChange: (event) => {
+        this.importFile(event.target.files[0]);
+        event.target.value = '';
+      },
+    });
+    return h('details', { class: 'sync-more' },
+      h('summary', {}, 'Cara lain: lewat file'),
+      h('div', { class: 'sync-choices' },
+        this.choice('download', 'Masukkan file sinkron', 'Pilih file ProjectYearEnd-sinkron dari perangkat satunya.', () => input.click()),
+        this.choice('upload', 'Siapkan file sinkron', 'Simpan semua data perangkat ini sebagai satu file.', () => this.prepareFile())),
+      input);
+  }
+
+  async importFile(selected) {
+    if (!selected) return;
+    let file;
+    try {
+      file = TransferService.parse(await selected.text(), 'sync');
+    } catch (error) {
+      if (!(error instanceof TransferError)) throw error;
+      this.showProblem(error.message);
+      return;
+    }
+    this.review(file, { lead: 'File sinkron sudah dibaca. Isinya:', label: 'Masukkan' });
+  }
+
+  prepareFile() {
+    const text = JSON.stringify(this.app.transfer.syncFile());
+    TransferService.save(new Blob([text], { type: 'application/json' }), SyncService.fileName());
+    this.render(
+      h('div', { class: 'notice notice-info', role: 'status' }, 'File ProjectYearEnd-sinkron tersimpan di folder Download.'),
+      h('p', {}, 'Di halaman QR dari laptop, buka "Tidak berhasil? Pakai cara file", lalu pilih file ini.'),
+      this.actions(this.button('Kembali', () => this.home(), true)));
+  }
+
+  // ---- Phone, arriving from the Moyen Sync page it landed on after scanning the QR code.
+  // The laptop's data rides in the address of this page and this device's answer travels back the same way,
+  // so it works in any browser or camera app: no second window, and no file to save.
+
+  // hash is '#/sinkron/<laptop page>/<laptop data>' on the way in, and
+  // '#/sinkron-ok/<nonce>' or '#/sinkron-gagal/<nonce>' once the laptop has answered.
+  async arrive(hash = location.hash) {
+    const [, step, first, second] = hash.split('/');
+    // The data leaves the address bar at once, so a reload or a copied link never repeats it.
+    history.replaceState(null, '', `${location.pathname}${location.search}#/`);
+    if (!this.begin()) return;
+    if (step !== 'sinkron') {
+      await this.settle(step === 'sinkron-ok', first);
+      return;
+    }
+    this.render(this.status('Membaca data dari laptop...'));
+    let file;
+    let laptopPage;
+    try {
+      laptopPage = new TextDecoder().decode(SyncService.toBytes(first || ''));
+      file = TransferService.parse(await SyncService.unpack(second || ''), 'sync');
+    } catch (error) {
+      this.showProblem(error instanceof TransferError ? error.message : 'Data dari laptop tidak terbaca. Pindai ulang QR di laptop.');
+      return;
+    }
+    if (!SyncPanel.LAPTOP_PAGE.test(laptopPage)) {
+      this.showProblem('Alamat laptop tidak dikenali. Pindai ulang QR di laptop.');
+      return;
+    }
+    const outgoing = this.app.store.read((data) => DraftRepository.list(data)).filter((draft) => draft.state !== 'sent');
+    const total = outgoing.reduce((sum, draft) => sum + draft.totals.total, 0);
+    this.review(file, {
+      lead: 'Laptop ditemukan. Dari laptop ke perangkat ini:',
+      label: 'Sinkronkan',
+      cancel: () => this.close(),
+      push: {
+        preview: h('p', {}, outgoing.length > 0
+          ? `Dari perangkat ini ke laptop: ${outgoing.length} draf, total ${Format.rupiah(total)}.`
+          : 'Dari perangkat ini ke laptop: tidak ada draf baru.'),
+        send: (summary) => this.depart(laptopPage, summary, outgoing),
+      },
+    });
+  }
+
+  // The merge has run. This device's data now goes to the laptop by returning to the Moyen Sync page,
+  // and a note is kept of what to finish once that page reports that the laptop has it.
+  async depart(laptopPage, summary, outgoing) {
+    const file = this.app.transfer.syncFile();
+    let payload = await SyncService.pack(JSON.stringify(file));
+    // Too long for an address: the drafts alone still fit, and they are what the laptop is waiting for.
+    if (payload.length > SyncService.LINK_LIMIT) {
+      const slim = { ...file, invoices: [], items: [], config: { ...file.config, store: { ...file.config.store, logo: null } } };
+      payload = await SyncService.pack(JSON.stringify(slim));
+    }
+    const nonce = DraftRepository.uid();
+    Device.write(SyncPanel.PENDING_KEY, JSON.stringify({ nonce, uids: outgoing.map((draft) => draft.uid), lines: SyncPanel.summaryLines(summary) }));
+    if (payload.length > SyncService.LINK_LIMIT) {
+      await this.settle(false, nonce);
+      return;
+    }
+    this.render(this.status('Mengirim ke laptop...'));
+    this.navigate(`${laptopPage}#push=${nonce}.${payload}`);
+  }
+
+  navigate(url) {
+    location.href = url;
+  }
+
+  // Back from the Moyen Sync page: the laptop has, or has not, confirmed that it holds this device's data.
+  // Only now are the drafts called sent.
+  async settle(ok, nonce) {
+    let pending;
+    try {
+      pending = JSON.parse(Device.read(SyncPanel.PENDING_KEY));
+    } catch (error) {
+      pending = null;
+    }
+    // An old or foreign link: there is nothing to finish, so the usual panel is shown and the note is kept.
+    if (!pending || pending.nonce !== nonce) {
+      this.home();
+      return;
+    }
+    Device.write(SyncPanel.PENDING_KEY, '');
+    if (ok) {
+      if (Device.isPhone()) await this.app.drafts.markSent(pending.uids);
+      Device.markSynced();
+    }
+    const count = pending.uids.length;
+    this.showResult({
+      headline: ok ? 'Sinkronisasi selesai.' : 'Data laptop sudah masuk, tetapi kiriman ke laptop belum sampai.',
+      lines: pending.lines,
+      note: ok
+        ? count > 0 && h('p', {}, `${count} draf terkirim ke laptop dan menunggu diposting.`)
+        : h('div', { class: 'notice notice-warning', role: 'alert' }, 'Draf tetap aman di perangkat ini. Buat QR baru di laptop, lalu ulangi sinkronisasi.'),
+      undo: () => this.undoLast(),
+    });
+    await this.app.router.refresh();
+  }
+
+  // After the trip through the Moyen Sync page the copy taken before the merge is no longer in memory,
+  // so it is read back from Brankas Data.
+  async undoLast() {
+    const { backend } = this.app.store;
+    const copy = backend.backups ? (await backend.backups()).find((backup) => backup.reason === 'sinkron') : null;
+    if (!copy) {
+      this.showProblem('Salinan sebelum sinkronisasi tidak ditemukan di Brankas Data.');
+      return;
+    }
+    await this.undo(await backend.readBackup(copy.name));
+  }
+
+  // ---- Shared: the summary, the merge, its result, and the way back.
+
+  static some(list) {
+    return `${list.slice(0, 5).join(', ')}${list.length > 5 ? ', ...' : ''}`;
+  }
+
+  static isEmpty(summary) {
+    return !(summary.fresh || summary.updated || summary.newItems || summary.config || summary.conflicts.length
+      || summary.draftsNew || summary.draftsUpdated || summary.posted.length || summary.returned);
+  }
+
+  static summaryLines(summary) {
+    const lines = [];
+    if (summary.draftsNew || summary.draftsUpdated) {
+      lines.push(`Draf dari HP: ${summary.draftsNew} baru${summary.draftsUpdated ? `, ${summary.draftsUpdated} diperbarui` : ''}, total ${Format.rupiah(summary.draftTotal)}`);
+    }
+    if (summary.posted.length) lines.push(`Draf yang sudah diposting laptop: ${SyncPanel.some(summary.posted)}`);
+    if (summary.returned) lines.push(`Draf dikembalikan laptop untuk diperbaiki: ${summary.returned}`);
+    if (summary.fresh) lines.push(`Invoice baru: ${summary.fresh}`);
+    if (summary.updated) lines.push(`Invoice diperbarui ke versi terbaru: ${summary.updated}`);
+    if (summary.newItems) lines.push(`Barang baru: ${summary.newItems}`);
+    if (summary.config) lines.push('Pengaturan toko disalin, karena perangkat ini belum punya');
+    if (summary.kept) lines.push(`Invoice yang sudah sama, tidak diubah: ${summary.kept}`);
+    if (summary.conflicts.length) lines.push(`Dilewati, nomor sama tapi isinya berbeda: ${summary.conflicts.length} (${SyncPanel.some(summary.conflicts)})`);
+    if (!lines.length) lines.push('Tidak ada data baru. Semua sudah sama.');
+    return lines;
+  }
+
+  summary(summary) {
+    return h('ul', { class: 'sync-summary' }, SyncPanel.summaryLines(summary).map((line) => h('li', {}, line)));
+  }
+
+  // The summary comes from the same merge that will run, so what is shown is what happens.
+  // push, when given, also hands this device's data over after the merge.
+  review(file, { lead, label, cancel, push }) {
+    this.render(
+      h('p', {}, lead),
+      this.summary(this.app.transfer.previewSync(file)),
+      push && push.preview,
+      h('p', { class: 'muted' }, 'Tidak ada data yang dihapus. Data sekarang disalin dulu ke Brankas Data, jadi sinkronisasi ini bisa dibatalkan.'),
+      this.actions(
+        this.button('Batal', cancel || (() => this.home())),
+        this.button(label, (event) => this.apply(file, event.currentTarget, push), true)));
+  }
+
+  async apply(file, button, push) {
+    // Redrawing the page after the merge would throw away a form that is still being filled in.
+    if (this.app.router.current && this.app.router.current.isDirty()) {
+      this.showProblem('Ada isian yang belum disimpan di halaman ini. Simpan atau batalkan dulu, lalu ulangi sinkronisasi.');
+      return;
+    }
+    button.disabled = true;
+    const before = await this.app.store.safetyCopy('sinkron');
+    const summary = await this.app.transfer.applySync(file);
+    // With a push, the result is shown once the laptop has answered.
+    if (push) {
+      await push.send(summary);
+      return;
+    }
+    Device.markSynced();
+    this.showResult({
+      headline: 'Sinkronisasi selesai.',
+      lines: SyncPanel.summaryLines(summary),
+      undo: () => this.undo(before),
+      drafts: !Device.isPhone() && summary.draftsNew + summary.draftsUpdated > 0,
+    });
+    await this.app.router.refresh();
+  }
+
+  showResult({ headline, lines, note, undo, drafts }) {
+    this.render(
+      h('div', { class: 'notice notice-info', role: 'status' }, headline),
+      h('ul', { class: 'sync-summary' }, lines.map((line) => h('li', {}, line))),
+      note,
+      this.actions(
+        this.button('Batalkan sinkronisasi', undo),
+        drafts && this.button('Buka Kotak Draf', () => {
+          this.close();
+          this.app.router.go('invoices');
+        }),
+        this.button('Selesai', () => this.close(), true)));
+    Dialog.toast(headline);
+  }
+
+  // Puts back the copy taken just before the merge.
+  async undo(before) {
+    await this.app.store.restore(before);
+    this.render(
+      h('div', { class: 'notice notice-info', role: 'status' }, 'Sinkronisasi dibatalkan. Data di perangkat ini kembali seperti sebelumnya.'),
+      h('p', { class: 'muted' }, 'Perangkat satunya tidak ikut berubah. Sinkronkan lagi kapan saja.'),
+      this.actions(this.button('Selesai', () => this.close(), true)));
+    await this.app.router.refresh();
+  }
+
+  showProblem(message) {
+    this.render(
+      h('div', { class: 'notice notice-error', role: 'alert' }, message),
+      this.actions(this.button('Kembali', () => this.again(), true)));
+  }
+}
+
+</script>
 
   <script>
 class App {
@@ -6979,6 +8964,7 @@ class App {
     this.config = new ConfigRepository(store);
     this.items = new ItemRepository(store);
     this.invoices = new InvoiceRepository(store);
+    this.drafts = new DraftRepository(store);
     this.transfer = new TransferService(store);
   }
 
@@ -6997,10 +8983,15 @@ class App {
       return;
     }
     await this.mountRouter(outlet).start();
+    this.sync = new SyncPanel(this);
+    this.sync.mount();
+    // A phone that scanned the laptop's QR arrives here from the Moyen Sync page, with the laptop's data in the address.
+    const bridged = location.hash.startsWith('#/sinkron');
+    if (bridged) this.sync.arrive();
     window.addEventListener('focus', () => this.refreshIfStale());
     await Splash.finish();
     const { store } = await this.config.get();
-    if (Tour.shouldStart(store.name, Tour.seen())) new Tour(this).start();
+    if (!bridged && Tour.shouldStart(store.name, Tour.seen())) new Tour(this).start();
   }
 
   mountRouter(outlet) {
@@ -7200,6 +9191,5 @@ class App {
 new App().start();
 
 </script>
-<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>
