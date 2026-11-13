@@ -814,6 +814,8 @@ input.is-locked { background: transparent; border-color: var(--color-line); curs
 .sync-more { border-top: 1px solid var(--color-line); padding-top: var(--space-1); }
 .sync-more summary { color: var(--color-muted); cursor: pointer; font-weight: 600; line-height: var(--control-height); }
 .sync-more .sync-choices { margin-top: var(--space-2); }
+.sync-link { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.sync-link input { flex: 1 1 14rem; min-width: 0; }
 
 /* The audit of one invoice: a verdict line, and every check behind it. */
 .checks { color: var(--color-muted); font-size: var(--text-small); margin-bottom: var(--space-2); }
@@ -8712,7 +8714,24 @@ class SyncPanel {
       h('p', { class: 'muted' }, draftText, ' ', Device.lastSync()
         ? `Terakhir sinkron dengan laptop: ${Pulse.ago(Device.lastSync())}.`
         : 'HP ini belum pernah sinkron dengan laptop.'),
+      this.linkSection(),
       this.fileSection());
+  }
+
+  // A phone keeps separate data for each browser window: the camera's own window, the browser, and the
+  // installed app do not see each other's drafts. Starting from here keeps the sync where the drafts are.
+  linkSection() {
+    const input = h('input', { class: 'input', type: 'url', inputmode: 'url', autocapitalize: 'off', autocomplete: 'off', placeholder: 'http://192.168.x.x:8737/s/...', 'aria-label': 'Alamat dari laptop' });
+    const connect = () => {
+      const typed = input.value.trim();
+      const address = /^https?:\/\//.test(typed) ? typed : `http://${typed}`;
+      if (SyncPanel.LAPTOP_PAGE.test(address)) this.navigate(address);
+      else this.showProblem('Alamat laptop tidak dikenali. Ketik atau tempel persis seperti yang tertulis di bawah QR laptop.');
+    };
+    return h('details', { class: 'sync-more' },
+      h('summary', {}, 'Draf tidak ikut terkirim? Sambungkan lewat alamat'),
+      h('p', { class: 'muted' }, 'Ketik atau tempel alamat yang tertulis di bawah QR laptop, lalu tekan Sambungkan. Sinkronisasi berjalan dari sini, tempat draf Anda disimpan.'),
+      h('div', { class: 'sync-link' }, input, this.button('Sambungkan', connect)));
   }
 
   fileSection() {
@@ -8793,12 +8812,32 @@ class SyncPanel {
       label: 'Sinkronkan',
       cancel: () => this.close(),
       push: {
-        preview: h('p', {}, outgoing.length > 0
-          ? `Dari perangkat ini ke laptop: ${outgoing.length} draf, total ${Format.rupiah(total)}.`
-          : 'Dari perangkat ini ke laptop: tidak ada draf baru.'),
+        preview: outgoing.length > 0
+          ? h('p', {}, `Dari perangkat ini ke laptop: ${outgoing.length} draf, total ${Format.rupiah(total)}.`)
+          : this.noDrafts(laptopPage),
         send: (summary) => this.depart(laptopPage, summary, outgoing),
       },
     });
+  }
+
+  // No draft is found here. If one was written, it sits in another window of this phone, and the laptop's
+  // address is what carries the sync over to it.
+  noDrafts(laptopPage) {
+    const copy = h('button', { class: 'button', type: 'button', onClick: async () => {
+      try {
+        await navigator.clipboard.writeText(laptopPage);
+        copy.textContent = 'Alamat tersalin';
+      } catch (error) {
+        // Copying was refused: the address stays on screen to be copied by hand.
+      }
+    } }, 'Salin alamat laptop');
+    return h('div', {},
+      h('p', {}, 'Dari perangkat ini ke laptop: tidak ada draf baru.'),
+      h('details', { class: 'sync-more' },
+        h('summary', {}, 'Sudah membuat draf, tetapi tidak terhitung?'),
+        h('p', { class: 'muted' }, 'Kamera membuka jendela lain yang tidak menyimpan draf itu. Jangan lanjutkan di sini. Salin alamat laptop, buka aplikasi tempat draf dibuat, tekan tombol Sinkronisasi, lalu tempel di "Sambungkan lewat alamat".'),
+        h('p', { class: 'sync-url' }, h('strong', {}, laptopPage)),
+        copy));
   }
 
   // The merge has run. This device's data now goes to the laptop by returning to the Moyen Sync page,
